@@ -8,7 +8,7 @@ For the consumer while receiving provide a practical product review service assi
 
 # 졸업 프로젝트
 이프로젝트는 졸업프로젝트이다. 프로젝트 멤버는 [limky](https://github.com/Limky),[iguru](https://github.com/xguru),[bang](https://github.com/emailtenid) 으로 구성되어있다.
-![임인혁사진](https://avatars2.githubusercontent.com/u/126918?v=3&s=400)
+
 비전
 
 우리 서비스의 목적은 입장에 따라 크게 2가지로 나뉜다. 
