@@ -7,7 +7,7 @@ The purpose of our service is largely divided into two depending on the position
 For the consumer while receiving provide a practical product review service assist in efficient purchase selection . For businesses to readily identify the consumer index , allows the strategic sales management . In addition, the ultimate purpose of our service is to make a place for the community to build healthy consumption culture among consumers and businesses.
 
 # 졸업 프로젝트
-이프로젝트는 졸업프로젝트이다. 프로젝트 멤버는 [limky](https://github.com/Limky),iguru,[bang](https://github.com/emailtenid) 으로 구성되어있다.
+이프로젝트는 졸업프로젝트이다. 프로젝트 멤버는 [limky](https://github.com/Limky),[iguru](https://github.com/xguru),[bang](https://github.com/emailtenid) 으로 구성되어있다.
 
 비전
 
