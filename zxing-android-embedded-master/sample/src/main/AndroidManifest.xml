@@ -54,6 +54,13 @@
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
 
+        <!--수정 된 ManiFest-->
+        <activity
+            android:name="example.zxing.ReviewActivity"
+            android:label="ReviewActivity"
+            android:theme="@style/AppTheme" >
+        </activity>
+
     </application>
 
 </manifest>

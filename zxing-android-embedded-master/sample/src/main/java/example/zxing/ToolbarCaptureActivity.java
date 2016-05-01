@@ -1,5 +1,6 @@
 package example.zxing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -43,6 +44,7 @@ public class ToolbarCaptureActivity extends AppCompatActivity implements View.On
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
 
+        //floating action button 추가
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab1 = (FloatingActionButton)findViewById(R.id.fab1);
         fab2 = (FloatingActionButton)findViewById(R.id.fab2);
@@ -60,17 +62,17 @@ public class ToolbarCaptureActivity extends AppCompatActivity implements View.On
         int id = v.getId();
         switch (id){
             case R.id.fab:
-
                 animateFAB();
                 Toast.makeText(getApplicationContext(),"fab", Toast.LENGTH_LONG).show();
                 break;
             case R.id.fab1:
-
                 Log.d("Raj", "Fab 1");
                 Toast.makeText(getApplicationContext(), "fab1", Toast.LENGTH_LONG).show();
+                //intent test
+                Intent i = new Intent(ToolbarCaptureActivity.this, ReviewActivity.class);
+                startActivity(i);
                 break;
             case R.id.fab2:
-
                 Log.d("Raj", "Fab 2");
                 Toast.makeText(getApplicationContext(), "fab2", Toast.LENGTH_LONG).show();
                 break;
