@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new IntentIntegrator(this).setCaptureActivity(ToolbarCaptureActivity.class).initiateScan();
-        setContentView(R.layout.capture_appcompat);
+     //   setContentView(R.layout.capture_appcompat);
     }
 
     public void scanBarcode(View view) {
