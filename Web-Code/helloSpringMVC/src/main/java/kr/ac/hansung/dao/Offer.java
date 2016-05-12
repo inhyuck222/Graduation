@@ -2,48 +2,37 @@ package kr.ac.hansung.dao;
 
 public class Offer {
 
-
 	private int id;
-	private String name;
 	private String email;
-	private String text;
+	private String password;
+	private String company;
 
 	
 	public Offer(){
-		
-		
+			
 		
 	}
 	
-	public Offer(int id, String name, String email, String text) {
+	public Offer(int id, String email, String password, String company) {
 		this.id = id;
-		this.name = name;
 		this.email = email;
-		this.text = text;
+		this.password = password;
+		this.company = company;
 	}
 	
-	public Offer(String name, String email, String text) {
+	public Offer(String email, String password, String company) {
 		this.id = id;
-		this.name = name;
 		this.email = email;
-		this.text = text;
+		this.password = password;
+		this.company = company;
 	}
 	
-
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getEmail() {
@@ -54,17 +43,26 @@ public class Offer {
 		this.email = email;
 	}
 
-	public String getText() {
-		return text;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setPassword(String password) {
+		this.password = password;
 	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
 	
 	@Override
 	public String toString() {
-		return "Offer [id=" + id + ", name=" + name + ", email=" + email + ", text=" + text + "]";
+		return "Offer [id=" + id + ", email=" + email + ", password=" + password + ", company=" + company + "]";
 	}
 	
 	
