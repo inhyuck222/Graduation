@@ -32,11 +32,14 @@ public class ToolbarCaptureActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capture_appcompat);
 
+        //for capture
         barcodeScannerView = (CompoundBarcodeView)findViewById(R.id.zxing_barcode_scanner);
 
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.decode();
+
+        //for toolbar
     }
 
     @Override

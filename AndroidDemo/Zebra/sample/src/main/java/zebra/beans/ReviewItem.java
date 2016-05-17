@@ -9,7 +9,6 @@ public class ReviewItem {
     public String ratingBar;
     public String reviewText;
 
-
     public ReviewItem(int profileImage, String memberId, String ratingBar, String reviewText){
         this.profileImage = profileImage;
         this.memberId = memberId;
