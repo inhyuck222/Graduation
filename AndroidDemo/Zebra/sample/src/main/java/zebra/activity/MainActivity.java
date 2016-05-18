@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ListView mDrawerList;
     NaviAdapter naviAdapter;
     ActionBarDrawerToggle mDrawerToggle;
-    String[] mDrawerListItems;
 
 
     @Override
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Toolbar 설정
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("얼룩말");
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
 
         mDrawerList = (ListView)findViewById(R.id.naviList);
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(i == 1){NaviItem item = new NaviItem(R.drawable.ic_library_books_black_48dp, "나의 리뷰");naviAdapter.add(item);}
             if(i == 2){NaviItem item = new NaviItem(R.drawable.ic_redeem_black_48dp, "선물함");naviAdapter.add(item);}
             if(i == 3){NaviItem item = new NaviItem(R.drawable.logout, "로그아웃");naviAdapter.add(item);}
-
         }
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close){
             public void onDrawerClosed(View v){
                 super.onDrawerClosed(v);
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 syncState();
             }
         };
+
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
