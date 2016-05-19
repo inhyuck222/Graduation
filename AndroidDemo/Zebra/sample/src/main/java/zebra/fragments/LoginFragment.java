@@ -19,7 +19,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-
+        /*
         signupButton = (Button)v.findViewById(R.id.signupButton);
         loginButton = (Button)v.findViewById(R.id.loginButton);
 
@@ -35,8 +35,10 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().finish();
             }
-        });
+        });*/
 
         return v;
     }
+
+
 }

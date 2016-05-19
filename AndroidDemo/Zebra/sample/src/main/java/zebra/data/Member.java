@@ -1,4 +1,4 @@
-package zebra.beans;
+package zebra.data;
 
 import java.util.Date;
 
@@ -7,20 +7,21 @@ import java.util.Date;
  */
 public class Member {
     String id;
-    String paswword;
+    String password;
     String name;
     int phoneNumber;
     int point;
     int level;
     Date lastReviewDate;
     int reviewCount;
+    int totalReviewCount;
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setPaswword(String paswword) {
-        this.paswword = paswword;
+    public void setPaswword(String password) {
+        this.password = password;
     }
 
     public void setName(String name) {
@@ -47,17 +48,12 @@ public class Member {
         this.reviewCount = reviewCount;
     }
 
-    public void setTotalReviewCount(int totalReviewCount) {
-        this.totalReviewCount = totalReviewCount;
-    }
+    public void setTotalReviewCount(int totalReviewCount) {        this.totalReviewCount = totalReviewCount;    }
 
-    public String getId() {
-
-        return id;
-    }
+    public String getId() {       return id;    }
 
     public String getPaswword() {
-        return paswword;
+        return password;
     }
 
     public String getName() {
@@ -87,8 +83,5 @@ public class Member {
     public int getTotalReviewCount() {
         return totalReviewCount;
     }
-
-    //DB에 오타 (totalReivewCount)
-    int totalReviewCount;
 
 }

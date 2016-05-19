@@ -1,4 +1,4 @@
-package zebra.beans;
+package zebra.data;
 
 /**
  * Created by multimedia on 2016-05-18.

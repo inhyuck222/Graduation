@@ -26,8 +26,9 @@ import zebra.beans.NaviItem;
 import zebra.views.NaviHeaderView;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    CircleButton barcodeButton, reviewButton, loginButton;
+public class MainActivity extends AppCompatActivity {
+    CircleButton loginButton, barcodeButton, searchButton;
+
     //for toolbar
     DrawerLayout mDrawerLayout;
     ListView mDrawerList;
@@ -40,14 +41,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Button 설정
+        loginButton = (CircleButton) findViewById(R.id.loginButton);
         barcodeButton = (CircleButton) findViewById(R.id.barcodeButton);
-        reviewButton = (CircleButton) findViewById(R.id.reviewButton);
-        loginButton = (CircleButton) findViewById(R.id.searchButton);
+        searchButton = (CircleButton) findViewById(R.id.searchButton);
 
-        barcodeButton.setOnClickListener(this);
-        reviewButton.setOnClickListener(this);
-        loginButton.setOnClickListener(this);
 
+        //loginButton OnClick
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+            }
+        });
+        barcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IntentIntegrator(MainActivity.this).setCaptureActivity(ToolbarCaptureActivity.class).initiateScan();
+            }
+        });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        setToolbar();
+
+    }
+
+    void setToolbar(){
         //Toolbar 설정
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -116,24 +140,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        int buttonId = v.getId();
-        switch (buttonId) {
-            case R.id.barcodeButton:
-                new IntentIntegrator(this).setCaptureActivity(ToolbarCaptureActivity.class).initiateScan();
-                break;
-            case R.id.reviewButton:
-                Intent reviewIntent = new Intent(MainActivity.this, ReviewActivity.class);
-                startActivity(reviewIntent);
-                break;
-            case R.id.loginButton:
-                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(loginIntent);
-                break;
         }
     }
 

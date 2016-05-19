@@ -1,33 +1,23 @@
 package zebra.network;
 
-import android.app.Application;
 import android.content.Context;
-import android.preference.PreferenceActivity;
 
 
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.PersistentCookieStore;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.HttpClient;
-import example.zxing.SampleApplication;
-
-
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
+import zebra.json.Login;
 
 /**
  * Created by multimedia on 2016-05-18.
  */
 public class NetworkManager {
-    /*
+
     private static NetworkManager instance;
     public static NetworkManager getInstance(){
         if(instance == null){
@@ -40,23 +30,11 @@ public class NetworkManager {
     Gson gson;
 
     private NetworkManager() {
-        try {
-            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            trustStore.load(null, null);
-            client = new AsyncHttpClient();
-            client.setCookieStore(new PersistentCookieStore(SampleApplication.getContext()));
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        client = new AsyncHttpClient();
+
         gson = new Gson();
-        PersistentCookieStore myCookieStore = new PersistentCookieStore(SampleApplication.getContext());
-        client.setCookieStore(myCookieStore);
+        //PersistentCookieStore myCookieStore = new PersistentCookieStore(SampleApplication.getContext());
+        //client.setCookieStore(myCookieStore);
 
     }
 
@@ -73,10 +51,26 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    private static final String SERVIER_URL = "http://..";
+    private static final String SERVER_URL = "http://113.198.84.85:8080/ZEBRA/";
 
-    public void scan(Context context, int barcode, final OnResultResponseListener<>)
-    */
+    private static final String LOGIN_URL = SERVER_URL + "/adLogin";
+    public void login(Context context, String id, String password, final OnResultResponseListener<Login> listener){
+        RequestParams params = new RequestParams();
+        params.put("id", id);
+        params.put("password", password);
+        client.post(context, LOGIN_URL, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode, responseString);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Login result = gson.fromJson(responseString, Login.class);
+                listener.onSuccess(result);
+            }
+        });
+    }
     /**
      * MainActivity에서 바코드가 스캔 되면 그 값을 변수로 잡아서 MainActivity에서
      * NetworkManager.getInstance().scan(MainActivity.this, idView.getText(), );
