@@ -1,5 +1,6 @@
 package zebra.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -8,14 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import example.zxing.R;
 import zebra.adapters.NaviAdapter;
 import zebra.beans.NaviItem;
+import zebra.dialog.ReviewDialog;
 import zebra.views.NaviHeaderView;
-import zebra.views.ReviewHeaderView;
 import zebra.beans.ReviewItem;
 import zebra.adapters.ReviewAdapter;
 
@@ -40,7 +42,7 @@ public class ReviewActivity extends AppCompatActivity{
         reviewList = (ListView)findViewById(R.id.reviewList);
         mAdapter = new ReviewAdapter();
         reviewList.setAdapter(mAdapter);
-        ReviewHeaderView reviewHeader = new ReviewHeaderView(ReviewActivity.this);
+        View reviewHeader = getLayoutInflater().inflate(R.layout.review_header, null, false);
         reviewList.addHeaderView(reviewHeader);
 
         for (int i=0; i<10; i++) {
@@ -49,6 +51,17 @@ public class ReviewActivity extends AppCompatActivity{
         }
 
         //Toolbar 설정
+        setToolbar();
+
+        reviewHeader.findViewById(R.id.dialogButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReviewDialog dialog = new ReviewDialog(ReviewActivity.this);
+                dialog.show();
+            }
+        });
+    }
+    private void setToolbar(){
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("Review");
 
@@ -95,7 +108,6 @@ public class ReviewActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
-
     }
 
     @Override

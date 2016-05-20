@@ -11,11 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 import example.zxing.R;
 import zebra.adapters.NaviAdapter;
 import zebra.beans.NaviItem;
 import zebra.fragments.SingupFragment;
 import zebra.fragments.LoginFragment;
+import zebra.json.Login;
 import zebra.views.NaviHeaderView;
 
 /**

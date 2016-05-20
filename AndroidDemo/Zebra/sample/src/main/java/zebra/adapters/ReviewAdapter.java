@@ -50,4 +50,10 @@ public class ReviewAdapter extends BaseAdapter{
         view.setViewItem(items.get(position));
         return view;
     }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
 }
