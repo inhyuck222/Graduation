@@ -33,4 +33,7 @@ public class ReviewHeaderView extends FrameLayout {
         dialogButton = (Button)findViewById(R.id.dialogButton);
         imageView.setImageResource(R.drawable.book);
     }
+    public void setReviewHeader(){
+
+    }
 }

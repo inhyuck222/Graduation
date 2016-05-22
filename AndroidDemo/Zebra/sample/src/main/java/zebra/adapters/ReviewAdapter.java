@@ -1,5 +1,6 @@
 package zebra.adapters;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -51,9 +52,10 @@ public class ReviewAdapter extends BaseAdapter{
         return view;
     }
 
+    /*
     @Override
     public boolean isEnabled(int position) {
         return false;
     }
-
+    */
 }

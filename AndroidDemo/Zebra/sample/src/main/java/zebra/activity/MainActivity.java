@@ -23,6 +23,7 @@ import at.markushi.ui.CircleButton;
 import example.zxing.R;
 import zebra.adapters.NaviAdapter;
 import zebra.beans.NaviItem;
+import zebra.manager.BarcodeManager;
 import zebra.views.NaviHeaderView;
 
 
@@ -131,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Log.d("MainActivity", "Scanned");
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+
+                BarcodeManager.getInstance().setBarcode(result.getContents());
 
                 Intent i = new Intent(MainActivity.this, ReviewActivity.class);
                 startActivity(i);
