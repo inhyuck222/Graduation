@@ -1,12 +1,10 @@
 package zebra.json;
 
-import zebra.data.Member;
+import zebra.data.MemberData;
 
 /**
  * Created by multimedia on 2016-05-19.
  */
 public class Login {
-    public int statusCode;
-    public Member member;
-
+    public MemberData memberData;
 }
