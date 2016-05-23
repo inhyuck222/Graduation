@@ -124,16 +124,6 @@ public class NetworkManager {
                     Review result = gson.fromJson(jsonResponseString, Review.class);
                     listener.onSuccess(result);
                 }
-
-                /*
-                if (responseString.equals("exist")) {
-                    Review result = null;
-                    listener.onSuccess(result);
-                } else {
-                    Review result = gson.fromJson(jsonResponseString, Review.class);
-                    listener.onSuccess(result);
-                }
-                */
             }
         });
     }
@@ -155,7 +145,8 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                listener.onSuccess(responseString);
+                String jsonResponseString = responseString.replaceAll("[\n \r]", "");
+                listener.onSuccess(jsonResponseString);
             }
         });
     }

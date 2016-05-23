@@ -36,6 +36,7 @@ public class ReviewItemView extends FrameLayout{
 
         profileImage.setImageResource(item.profileImage);
         memberId.setText(item.memberId);
+        ratingBar.setRating((float)item.ratingBar);
         reviewText.setText(item.reviewText);
     }
 

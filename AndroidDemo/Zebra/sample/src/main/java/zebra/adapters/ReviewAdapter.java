@@ -50,7 +50,6 @@ public class ReviewAdapter extends BaseAdapter {
             view = (ReviewItemView) convertView;
         }
         view.setViewItem(items.get(position));
-        Log.d("Adapter", ""+position);
 
         return view;
     }

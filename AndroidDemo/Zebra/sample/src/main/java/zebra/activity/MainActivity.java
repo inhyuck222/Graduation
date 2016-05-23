@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Review result) {
                 if(result.productInfo==null){
-                    Toast.makeText(MainActivity.this, "없어", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "등록 된 상품이 없습니다.", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(MainActivity.this, ProductRegisterActivity.class);
                     startActivity(i);
                 }else if(result == null){
@@ -142,15 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFail(int code, String responseString) {
-                /*
-                //test
-                ScanManager.getInstance().setBarcode("1234");
-                Toast.makeText(MainActivity.this, "없어", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(MainActivity.this, ProductRegisterActivity.class);
-                startActivity(i);
-                finish();
-                */
-
                 Toast.makeText(MainActivity.this, "실패"+code, Toast.LENGTH_LONG).show();
                 Log.d("Main", "실패");
             }

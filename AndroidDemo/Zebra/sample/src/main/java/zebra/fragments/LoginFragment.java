@@ -61,8 +61,6 @@ public class LoginFragment extends Fragment {
                 id = idEditText.getText().toString();
                 password = passwordEditText.getText().toString();
 
-                Toast.makeText(getActivity(), "눌림", Toast.LENGTH_LONG).show();
-
                 if (TextUtils.isEmpty(id) || TextUtils.isEmpty(password)) {
                     Toast.makeText(getActivity(), "아이디와 비밀번호를 입력하세요", Toast.LENGTH_LONG).show();
                 } else {

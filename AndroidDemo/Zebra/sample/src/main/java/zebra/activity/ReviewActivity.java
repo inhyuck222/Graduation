@@ -11,8 +11,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import example.zxing.R;
 import zebra.adapters.NaviAdapter;
@@ -42,10 +46,20 @@ public class ReviewActivity extends AppCompatActivity {
     NaviAdapter naviAdapter;
     ActionBarDrawerToggle mDrawerToggle;
 
+    ImageButton barcodeNaviButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+
+        barcodeNaviButton = (ImageButton)findViewById(R.id.barcodeNaviButton);
+        barcodeNaviButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IntentIntegrator(ReviewActivity.this).setCaptureActivity(ToolbarCaptureActivity.class).initiateScan();
+            }
+        });
 
         //getIntent
         barcode = ScanManager.getInstance().getBarcode();
@@ -74,15 +88,37 @@ public class ReviewActivity extends AppCompatActivity {
         reviewHeader = getLayoutInflater().inflate(R.layout.review_header, null, false);
         reviewList.addHeaderView(reviewHeader);
 
-        for (int i = 0; i < 10; i++) {
-            ReviewItem item = new ReviewItem(R.drawable.icon, result.reviews.get(i).id , 3, result.reviews.get(i).reviewText);
+        for (int i = 0; i < result.reviews.size(); i++) {
+            ReviewItem item = new ReviewItem(R.drawable.icon,
+                                            result.reviews.get(i).id ,
+                                            result.reviews.get(i).starPoint,
+                                            result.reviews.get(i).reviewText);
             mAdapter.add(item);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Log.d("ReviewActivity", "Cancelled scan");
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Log.d("ReviewActivity", "Scanned");
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
+                //ScanManager에 barcode를 set
+                ScanManager.getInstance().setBarcode(result.getContents());
+                barcode = ScanManager.getInstance().getBarcode();
+                network();
+            }
+        } else {
+            Log.d("ReviewActivity", "Cancelled scan");
+            Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public void network(){
@@ -90,15 +126,14 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Review result) {
                 if(result.productInfo==null){
-                    //Toast.makeText(ReviewActivity.this, "없어", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(ReviewActivity.this,MainActivity.class);
+                    Toast.makeText(ReviewActivity.this, "등록 된 상품이 없습니다.", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(ReviewActivity.this,ProductRegisterActivity.class);
                     startActivity(i);
                     finish();
-                    //상품 없는 Activity로 이동
                 }
                 else{
                     ScanManager.getInstance().setProductUrl(result.productInfo.productUrl);
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < result.reviews.size(); i++) {
                         ReviewItem item = new ReviewItem(R.drawable.icon, result.reviews.get(i).id , 3, result.reviews.get(i).reviewText);
                         mAdapter.add(item);
                     }

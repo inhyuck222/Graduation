@@ -58,9 +58,11 @@ public class ProductRegisterActivity extends AppCompatActivity{
                 NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, barcode, productName, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {
+                        //result 값에 따라 토스트 값을 상품 등록 감사와 이미 등록 요청 된 상품 입니다로 나누기
                         Toast.makeText(ProductRegisterActivity.this, "소중한 상품 등록 감사합니다!!", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
                         startActivity(i);
+                        finish();
                     }
 
                     @Override
@@ -77,6 +79,7 @@ public class ProductRegisterActivity extends AppCompatActivity{
                 Toast.makeText(ProductRegisterActivity.this, "다음 기회에 ~", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 

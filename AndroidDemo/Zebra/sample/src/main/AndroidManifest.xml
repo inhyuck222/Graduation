@@ -43,6 +43,12 @@
             android:label="LoginActivity"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme"></activity>
+
+        <activity
+            android:name="zebra.activity.ProductRegisterActivity"
+            android:label="ProductRegisterActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
