@@ -14,7 +14,7 @@ import zebra.views.ReviewItemView;
 /**
  * Created by multimedia on 2016-05-13.
  */
-public class ReviewAdapter extends BaseAdapter{
+public class ReviewAdapter extends BaseAdapter {
 
     private List<ReviewItem> items = new ArrayList<ReviewItem>();
 
@@ -43,19 +43,21 @@ public class ReviewAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ReviewItemView view = null;
+
         if (convertView == null) {
             view = new ReviewItemView(parent.getContext());
         } else {
             view = (ReviewItemView) convertView;
         }
         view.setViewItem(items.get(position));
+        Log.d("Adapter", ""+position);
+
         return view;
     }
 
-    /*
     @Override
     public boolean isEnabled(int position) {
         return false;
     }
-    */
+
 }

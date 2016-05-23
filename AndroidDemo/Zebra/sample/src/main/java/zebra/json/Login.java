@@ -7,4 +7,7 @@ import zebra.data.MemberData;
  */
 public class Login {
     public MemberData memberData;
+    public Login(){
+        memberData = new MemberData();
+    }
 }

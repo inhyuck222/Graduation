@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,7 +19,7 @@ import zebra.adapters.NaviAdapter;
 import zebra.beans.NaviItem;
 import zebra.dialog.ReviewDialog;
 import zebra.json.Review;
-import zebra.manager.BarcodeManager;
+import zebra.manager.ScanManager;
 import zebra.network.NetworkManager;
 import zebra.views.NaviHeaderView;
 import zebra.beans.ReviewItem;
@@ -33,6 +34,7 @@ public class ReviewActivity extends AppCompatActivity {
     View reviewHeader;
 
     String barcode;
+    Review result;
 
     //for toolbar
     DrawerLayout mDrawerLayout;
@@ -43,19 +45,14 @@ public class ReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        barcode = BarcodeManager.getInstance().getBarcode();
-        network();
-
         setContentView(R.layout.activity_review);
 
-        reviewList = (ListView) findViewById(R.id.reviewList);
-        mAdapter = new ReviewAdapter();
-        reviewList.setAdapter(mAdapter);
+        //getIntent
+        barcode = ScanManager.getInstance().getBarcode();
+        result = (Review)getIntent().getParcelableExtra("Result");
 
-        reviewHeader = getLayoutInflater().inflate(R.layout.review_header, null, false);
-
-        reviewList.addHeaderView(reviewHeader);
+        //listView 구성
+        setListView();
 
         //Toolbar 설정
         setToolbar();
@@ -70,6 +67,24 @@ public class ReviewActivity extends AppCompatActivity {
         });
     }
 
+    private void setListView(){
+        reviewList = (ListView) findViewById(R.id.reviewList);
+        mAdapter = new ReviewAdapter();
+        reviewList.setAdapter(mAdapter);
+        reviewHeader = getLayoutInflater().inflate(R.layout.review_header, null, false);
+        reviewList.addHeaderView(reviewHeader);
+
+        for (int i = 0; i < 10; i++) {
+            ReviewItem item = new ReviewItem(R.drawable.icon, result.reviews.get(i).id , 3, result.reviews.get(i).reviewText);
+            mAdapter.add(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    }
+
     public void network(){
         NetworkManager.getInstance().review(this, barcode, new NetworkManager.OnResultResponseListener<Review>() {
             @Override
@@ -82,6 +97,7 @@ public class ReviewActivity extends AppCompatActivity {
                     //상품 없는 Activity로 이동
                 }
                 else{
+                    ScanManager.getInstance().setProductUrl(result.productInfo.productUrl);
                     for (int i = 0; i < 10; i++) {
                         ReviewItem item = new ReviewItem(R.drawable.icon, result.reviews.get(i).id , 3, result.reviews.get(i).reviewText);
                         mAdapter.add(item);
@@ -92,7 +108,7 @@ public class ReviewActivity extends AppCompatActivity {
 
             @Override
             public void onFail(int code, String responseString) {
-                Toast.makeText(ReviewActivity.this, "실패", Toast.LENGTH_LONG).show();
+                Toast.makeText(ReviewActivity.this, "실패 "+code, Toast.LENGTH_LONG).show();
             }
         });
 

@@ -3,9 +3,13 @@ package zebra.fragments;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -29,12 +33,28 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        idEditText = (EditText)v.findViewById(R.id.idEditText);
-        passwordEditText = (EditText)v.findViewById(R.id.passwordEditText);
-        autoLoginCheck = (CheckBox)v.findViewById(R.id.autoLoginCheck);
+        idEditText = (EditText) v.findViewById(R.id.idEditText);
+        passwordEditText = (EditText) v.findViewById(R.id.passwordEditText);
 
-        loginButton = (Button)v.findViewById(R.id.loginButton);
+        idEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_ENTER:
+                            passwordEditText.requestFocus();
+                            return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        autoLoginCheck = (CheckBox) v.findViewById(R.id.autoLoginCheck);
+
+        loginButton = (Button) v.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,13 +63,13 @@ public class LoginFragment extends Fragment {
 
                 Toast.makeText(getActivity(), "눌림", Toast.LENGTH_LONG).show();
 
-                if(TextUtils.isEmpty(id) || TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(id) || TextUtils.isEmpty(password)) {
                     Toast.makeText(getActivity(), "아이디와 비밀번호를 입력하세요", Toast.LENGTH_LONG).show();
-                } else{
+                } else {
                     NetworkManager.getInstance().login(v.getContext(), id, password, new NetworkManager.OnResultResponseListener<Login>() {
                         @Override
                         public void onSuccess(Login result) {
-                            if(autoLoginCheck.isChecked()){
+                            if (autoLoginCheck.isChecked()) {
                                 //autoLogin 설정
                             }
                             Toast.makeText(getActivity(), "성공", Toast.LENGTH_LONG).show();

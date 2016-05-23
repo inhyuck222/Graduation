@@ -1,5 +1,6 @@
 package zebra.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -7,23 +8,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import example.zxing.R;
 import zebra.adapters.NaviAdapter;
 import zebra.beans.NaviItem;
-import zebra.fragments.SingupFragment;
-import zebra.fragments.LoginFragment;
-import zebra.json.Login;
+import zebra.manager.ScanManager;
+import zebra.network.NetworkManager;
 import zebra.views.NaviHeaderView;
 
 /**
- * Created by multimedia on 2016-05-14.
+ * Created by multimedia on 2016-05-22.
  */
-public class LoginActivity extends AppCompatActivity {
+public class ProductRegisterActivity extends AppCompatActivity{
+    TextView barcodeText;
+    EditText productNameEdit;
+    Button registerButton, cancelButton;
+    String barcode, productName;
+
     //for toolbar
     DrawerLayout mDrawerLayout;
     ListView mDrawerList;
@@ -33,25 +40,47 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
+
+        barcodeText = (TextView)findViewById(R.id.barcodeText);
+        productNameEdit = (EditText)findViewById(R.id.productNameEdit);
+        registerButton = (Button)findViewById(R.id.registerButton);
+        cancelButton = (Button)findViewById(R.id.cancelButton);
+
+        barcode = ScanManager.getInstance().getBarcode();
+        productName = productNameEdit.getText().toString();
+
+        barcodeText.setText("상품 바코드 : "+ barcode);
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, barcode, productName, new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Toast.makeText(ProductRegisterActivity.this, "소중한 상품 등록 감사합니다!!", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onFail(int code) {
+                        Toast.makeText(ProductRegisterActivity.this, "실패실패 띠띠띠 "+code, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProductRegisterActivity.this, "다음 기회에 ~", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
 
         setToolbar();
-
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(R.id.container, new LoginFragment()).commit();
-        }
-    }
-
-    public void pushSignUpFragment() {
-        getFragmentManager().beginTransaction().replace(R.id.container, new SingupFragment()).addToBackStack(null).commit();
-    }
-
-    public void pushLogInFragment() {
-        getFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment()).addToBackStack(null).commit();
-    }
-
-    public void popFragment() {
-        getFragmentManager().popBackStack();
     }
 
     void setToolbar(){
@@ -64,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         naviAdapter = new NaviAdapter();
         mDrawerList.setAdapter(naviAdapter);
 
-        NaviHeaderView header = new NaviHeaderView(LoginActivity.this);
+        NaviHeaderView header = new NaviHeaderView(ProductRegisterActivity.this);
         mDrawerList.addHeaderView(header);
 
         //navbar 아이템들, 지워야됨
@@ -79,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int editedPosition = position+1;
-                Toast.makeText(LoginActivity.this, "You selected item " + editedPosition, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProductRegisterActivity.this, "You selected item " + editedPosition, Toast.LENGTH_SHORT).show();
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
@@ -118,4 +147,5 @@ public class LoginActivity extends AppCompatActivity {
             default: return super.onOptionsItemSelected(item);
         }
     }
+
 }

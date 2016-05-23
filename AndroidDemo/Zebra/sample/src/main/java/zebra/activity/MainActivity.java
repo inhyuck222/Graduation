@@ -1,6 +1,5 @@
 package zebra.activity;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -11,8 +10,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,12 +20,16 @@ import at.markushi.ui.CircleButton;
 import example.zxing.R;
 import zebra.adapters.NaviAdapter;
 import zebra.beans.NaviItem;
-import zebra.manager.BarcodeManager;
+import zebra.json.Review;
+import zebra.manager.ScanManager;
+import zebra.network.NetworkManager;
 import zebra.views.NaviHeaderView;
 
 
 public class MainActivity extends AppCompatActivity {
     CircleButton loginButton, barcodeButton, searchButton;
+
+    String barcode;
 
     //for toolbar
     DrawerLayout mDrawerLayout;
@@ -36,16 +37,15 @@ public class MainActivity extends AppCompatActivity {
     NaviAdapter naviAdapter;
     ActionBarDrawerToggle mDrawerToggle;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //Button 설정
         loginButton = (CircleButton) findViewById(R.id.loginButton);
         barcodeButton = (CircleButton) findViewById(R.id.barcodeButton);
         searchButton = (CircleButton) findViewById(R.id.searchButton);
-
 
         //loginButton OnClick
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +122,41 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
+    public void network(){
+        NetworkManager.getInstance().review(this, barcode, new NetworkManager.OnResultResponseListener<Review>() {
+            @Override
+            public void onSuccess(Review result) {
+                if(result.productInfo==null){
+                    Toast.makeText(MainActivity.this, "없어", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(MainActivity.this, ProductRegisterActivity.class);
+                    startActivity(i);
+                }else if(result == null){
+                    Toast.makeText(MainActivity.this, "등록 대기중", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Intent i = new Intent(MainActivity.this, ReviewActivity.class);
+                    i.putExtra("Result", result);
+                    startActivity(i);
+                }
+            }
+
+            @Override
+            public void onFail(int code, String responseString) {
+                /*
+                //test
+                ScanManager.getInstance().setBarcode("1234");
+                Toast.makeText(MainActivity.this, "없어", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MainActivity.this, ProductRegisterActivity.class);
+                startActivity(i);
+                finish();
+                */
+
+                Toast.makeText(MainActivity.this, "실패"+code, Toast.LENGTH_LONG).show();
+                Log.d("Main", "실패");
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -133,10 +168,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MainActivity", "Scanned");
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
-                BarcodeManager.getInstance().setBarcode(result.getContents());
-
-                Intent i = new Intent(MainActivity.this, ReviewActivity.class);
-                startActivity(i);
+                //ScanManager에 barcode를 set
+                ScanManager.getInstance().setBarcode(result.getContents());
+                barcode = ScanManager.getInstance().getBarcode();
+                network();
             }
         } else {
             Log.d("MainActivity", "Cancelled scan");
