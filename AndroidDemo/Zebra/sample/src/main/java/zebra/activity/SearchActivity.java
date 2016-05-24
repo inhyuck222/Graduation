@@ -19,7 +19,7 @@ public class SearchActivity extends AppCompatActivity {
     EditText searchEdit;
     Button searchButton;
 
-    String keyWord;
+    String keyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +32,14 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                keyWord = searchEdit.getText().toString();
-                network(keyWord);
+                keyword = searchEdit.getText().toString();
+                network(keyword);
             }
         });
     }
 
     public void network(String keyWord){
-        NetworkManager.getInstance().productSearch(this, keyWord, new NetworkManager.OnResultResponseListener<Search>() {
+        NetworkManager.getInstance().productSearch(this, keyword, new NetworkManager.OnResultResponseListener<Search>() {
             @Override
             public void onSuccess(Search result) {
                 Toast.makeText(SearchActivity.this, "성공", Toast.LENGTH_LONG).show();
