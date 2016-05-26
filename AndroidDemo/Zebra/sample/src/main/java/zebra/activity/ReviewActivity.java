@@ -37,7 +37,6 @@ import zebra.views.ReviewHeaderView;
 public class ReviewActivity extends AppCompatActivity {
     ListView reviewList;
     ReviewAdapter mAdapter;
-    View reviewHeader;
     ReviewHeaderView reviewHeaderView;
 
     String barcode, productUrl;

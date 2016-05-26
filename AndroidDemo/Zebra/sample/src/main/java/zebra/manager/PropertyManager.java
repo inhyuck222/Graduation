@@ -36,7 +36,7 @@ public class PropertyManager{
         mEditor.commit();
     }
 
-    public void setIsogin(boolean isLogin){
+    public void setIsLogin(boolean isLogin){
         this.isLogin = isLogin;
     }
 
@@ -77,13 +77,19 @@ public class PropertyManager{
         MemberManager.getInstance().setId(mPrefs.getString("id", null));
         MemberManager.getInstance().setName(mPrefs.getString("name", null));
         MemberManager.getInstance().setPhoneNumber(mPrefs.getString("phoneNumber", null));
-        String s = mPrefs.getString("phoneNumber", null);
         MemberManager.getInstance().setPoint(mPrefs.getInt("point", 0));
         MemberManager.getInstance().setLevel(mPrefs.getString("level", null));
         MemberManager.getInstance().setLastReviewDate(mPrefs.getString("lastReviewDate", null));
         MemberManager.getInstance().setMemberUrl(mPrefs.getString("memberUrl", null));
         MemberManager.getInstance().setReviewCount(mPrefs.getInt("reviewCount", 0));
         MemberManager.getInstance().setTotalReviewCount(mPrefs.getInt("totalReviewCount", 0));
+    }
+
+    public void setLogOut(){
+        if(mPrefs == null)return;
+        MemberManager.getInstance().clearMemberInfo();
+        mEditor.clear();
+        mEditor.commit();
     }
 
     public static final String KEY_AUTO_LOGIN = "auto_login";

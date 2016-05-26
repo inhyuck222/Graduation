@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
         //자동 로그인일 경우에 설정
         if(PropertyManager.getInstance().getAutoLogin())PropertyManager.getInstance().setMemberInfoToMemManager();
-
     }
 
 
+    //애니메이션
     public void setAnimation(){
         imageAnimation = (ImageView) findViewById(R.id.imageAnimation);
         // animation_list.xml 를 ImageView 백그라운드에 셋팅한다
@@ -116,29 +116,24 @@ public class MainActivity extends AppCompatActivity {
     void setToolbar(boolean isFirst){
         //Toolbar 설정
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        //toolbar.setTitle("");
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
-
         mDrawerList = (ListView)findViewById(R.id.naviList);
         naviAdapter = new NaviAdapter();
         mDrawerList.setAdapter(naviAdapter);
-
         NaviHeaderView header = new NaviHeaderView(MainActivity.this);
+
         //onResume()에서 두번째 불려지는 경우 naviHeader가 두개 생기는 경우를 방지!!
         if(isFirst)mDrawerList.addHeaderView(header);
 
-        //navbar 아이템들, 지워야됨
         for (int i=0; i<4; i++) {
             if(i == 0){NaviItem item = new NaviItem(R.drawable.ic_perm_identity_black_48dp, "프로필");naviAdapter.add(item);}
             if(i == 1){NaviItem item = new NaviItem(R.drawable.ic_library_books_black_48dp, "나의 리뷰");naviAdapter.add(item);}
             if(i == 2){NaviItem item = new NaviItem(R.drawable.ic_redeem_black_48dp, "선물함");naviAdapter.add(item);}
             if(i == 3){
-                if(PropertyManager.getInstance().getAutoLogin() || PropertyManager.getInstance().getIsLogin()){
-                    PropertyManager.getInstance();
+                //if(PropertyManager.getInstance().getAutoLogin() || PropertyManager.getInstance().getIsLogin()){
+                if(PropertyManager.getInstance().getIsLogin()){
                     NaviItem item = new NaviItem(R.drawable.logout, "로그아웃");naviAdapter.add(item);
-                }
-                else
-                {
+                }else {
                     NaviItem item = new NaviItem(R.drawable.logout, "로그인");naviAdapter.add(item);
                 }
             }
@@ -147,12 +142,12 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 switch (position){
                     case 4:
-                        //로그아웃 일 경우에 toolbar를 다시 설정
                         PropertyManager.getInstance().setAutoLogin(MainActivity.this, false);
-                        PropertyManager.getInstance().setIsogin(false);
+                        PropertyManager.getInstance().setIsLogin(false);
+                        PropertyManager.getInstance().setLogOut();
+                        //로그아웃 일 경우에 toolbar를 다시 설정
                         setToolbar(false);
                 }
                 int editedPosition = position+1;

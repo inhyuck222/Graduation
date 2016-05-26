@@ -98,7 +98,16 @@ public class MemberManager {
         return this.id;
     }
 
-    public void setMember(){
+    public void clearMemberInfo(){
+        String id = null;
+        String name = null;
+        String phoneNumber = null;
+        int point = 0;
+        String level = null;
+        String lastReviewDate = null;
+        String memberUrl = null;
+        int reviewCount = 0;
+        int totalReviewCount = 0;
 
     }
 }
