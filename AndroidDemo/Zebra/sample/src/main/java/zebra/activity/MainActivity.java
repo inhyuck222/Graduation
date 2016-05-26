@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     void setToolbar(boolean isFirst){
         //Toolbar 설정
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("");
+        //toolbar.setTitle("");
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
 
         mDrawerList = (ListView)findViewById(R.id.naviList);
