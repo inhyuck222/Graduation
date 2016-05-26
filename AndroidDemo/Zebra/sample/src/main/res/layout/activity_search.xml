@@ -20,19 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:orientation="horizontal">
-
-            <!--ImageButton
-                android:id="@+id/barcodeNaviButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginRight="10dp"
-                android:background="@color/primary"
-                android:paddingBottom="15dp"
-                android:src="@drawable/ic_barcode_white" /-->
-
-        </LinearLayout>
+            android:orientation="horizontal"></LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 
@@ -47,11 +35,13 @@
             android:padding="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_marginBottom="20dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <EditText
@@ -69,18 +59,42 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_searche_white"
-                    android:background="@drawable/rounded_button" />
+                    android:background="@drawable/rounded_button"
+                    android:src="@drawable/ic_searche_white" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 android:orientation="vertical"></LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="야미" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="야미" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="야미" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <FrameLayout

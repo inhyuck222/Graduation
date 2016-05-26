@@ -9,6 +9,7 @@
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
@@ -23,14 +24,6 @@
         <item name="android:padding">10dp</item>
     </style>
 
-    <!--<style name="AppCompatCaptureTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">#ffb341</item>
-        <item name="colorPrimaryDark">#ffb341</item>
-        <item name="colorAccent">#ffb341</item>
-    </style>-->
-
     <style name="ToolbarTheme" parent="Theme.AppCompat">
         <item name="android:textColorPrimary">@color/abc_primary_text_material_dark</item>
         <item name="actionMenuTextColor">@color/abc_primary_text_material_dark</item>
@@ -42,7 +35,13 @@
         <item name="colorControlActivated">@color/ratinBar</item>
     </style>
 
-    <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="RatingBar_style" parent="@android:style/Widget.RatingBar">
+        <item name="android:minHeight">30dp</item>
+        <item name="android:maxHeight">30dp</item>
+        <item name="android:height">10dp</item>
+        <item name="android:width">10dp</item>
+        <item name="colorControlNormal">@color/ratinBar</item>
+        <item name="colorControlActivated">@color/ratinBar</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 </resources>
