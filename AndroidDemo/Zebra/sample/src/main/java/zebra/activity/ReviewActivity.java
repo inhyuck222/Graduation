@@ -37,7 +37,7 @@ public class ReviewActivity extends AppCompatActivity {
     ReviewAdapter mAdapter;
     View reviewHeader;
 
-    String barcode;
+    String barcode, productUrl;
     Review result;
 
     //for toolbar
@@ -63,6 +63,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         //getIntent
         barcode = ScanManager.getInstance().getBarcode();
+        productUrl = ScanManager.getInstance().getProductUrl();
         result = (Review)getIntent().getParcelableExtra("Result");
 
         //listView 구성
@@ -130,6 +131,8 @@ public class ReviewActivity extends AppCompatActivity {
                     Intent i = new Intent(ReviewActivity.this,ProductRegisterActivity.class);
                     startActivity(i);
                     finish();
+                }else if(result == null){
+                    Toast.makeText(ReviewActivity.this, "등록 대기중", Toast.LENGTH_LONG).show();
                 }
                 else{
                     ScanManager.getInstance().setProductUrl(result.productInfo.productUrl);
@@ -146,7 +149,6 @@ public class ReviewActivity extends AppCompatActivity {
                 Toast.makeText(ReviewActivity.this, "실패 "+code, Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     private void setToolbar() {
