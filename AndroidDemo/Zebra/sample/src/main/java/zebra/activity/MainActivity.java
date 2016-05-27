@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "등록 대기중", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Intent i = new Intent(MainActivity.this, ReviewActivity.class);
+                    Intent i = new Intent(MainActivity.this, ReviewActivityTest.class);
                     ScanManager.getInstance().setProductUrl(result.productInfo.productUrl);
                     i.putExtra("Result", result);
                     startActivity(i);

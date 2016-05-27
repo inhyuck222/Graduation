@@ -1,6 +1,7 @@
 package zebra.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -74,6 +75,7 @@ public class ReviewActivity extends AppCompatActivity {
         //Toolbar 설정
         setToolbar();
 
+        /*
         reviewHeaderView.findViewById(R.id.dialogButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +84,7 @@ public class ReviewActivity extends AppCompatActivity {
                 dialogFragment.show(fm, "dialog");
             }
         });
+        */
     }
 
     private void setListView(){
@@ -95,7 +98,7 @@ public class ReviewActivity extends AppCompatActivity {
         reviewList.addHeaderView(reviewHeaderView);
 
         for (int i = 0; i < result.reviews.size(); i++) {
-            ReviewItem item = new ReviewItem(R.drawable.icon,
+            ReviewItem item = new ReviewItem(result.reviews.get(i).memberUrl,
                                             result.reviews.get(i).id ,
                                             result.reviews.get(i).starPoint,
                                             result.reviews.get(i).reviewText);
@@ -142,7 +145,7 @@ public class ReviewActivity extends AppCompatActivity {
                 else{
                     ScanManager.getInstance().setProductUrl(result.productInfo.productUrl);
                     for (int i = 0; i < result.reviews.size(); i++) {
-                        ReviewItem item = new ReviewItem(R.drawable.icon, result.reviews.get(i).id , 3, result.reviews.get(i).reviewText);
+                        ReviewItem item = new ReviewItem(result.reviews.get(i).memberUrl, result.reviews.get(i).id , 3, result.reviews.get(i).reviewText);
                         mAdapter.add(item);
                     }
                 }
