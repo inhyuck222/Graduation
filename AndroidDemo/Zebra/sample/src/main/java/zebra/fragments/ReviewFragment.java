@@ -1,9 +1,10 @@
 package zebra.fragments;
 
 
-import android.app.Fragment;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class ReviewFragment extends Fragment {
     private void setListView(View view){
         reviewList = (ListView) view.findViewById(R.id.reviewList);
         reviewHeaderView = new ReviewHeaderView(view.getContext());
-        ReviewHeaderItem reviewHeaderItem =new ReviewHeaderItem(result.productInfo.productUrl, result.productInfo.productName, result.productInfo.description, result.productInfo.starPoint);
+        ReviewHeaderItem reviewHeaderItem = new ReviewHeaderItem(result.productInfo.productUrl, result.productInfo.productName, result.productInfo.description, result.productInfo.starPoint);
         reviewHeaderView.setReviewHeader(reviewHeaderItem);
         mAdapter = new ReviewAdapter();
         reviewList.setAdapter(mAdapter);

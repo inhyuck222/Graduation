@@ -138,7 +138,6 @@ public class NetworkManager {
         params.put("id", "a");
         params.put("barcode", barcode);
         params.put("productName", productName);
-        //params.put("productName", "옥시");
 
         client.post(context, PRODUCT_REGISTER_URL, params, new TextHttpResponseHandler() {
             @Override

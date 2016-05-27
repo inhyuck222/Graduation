@@ -48,13 +48,14 @@ public class ProductRegisterActivity extends AppCompatActivity{
         cancelButton = (Button)findViewById(R.id.cancelButton);
 
         barcode = ScanManager.getInstance().getBarcode();
-        productName = productNameEdit.getText().toString();
+
 
         barcodeText.setText("상품 바코드 : "+ barcode);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                productName = productNameEdit.getText().toString();
                 NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, barcode, productName, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {
