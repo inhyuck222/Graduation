@@ -1,5 +1,6 @@
 package zebra.fragments;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +14,12 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import example.zxing.R;
+import zebra.activity.LoginActivity;
 import zebra.activity.ReviewActivityTest;
 import zebra.json.Review;
 import zebra.manager.MemberManager;
 import zebra.manager.NetworkManager;
+import zebra.manager.PropertyManager;
 import zebra.manager.ReviewManager;
 import zebra.manager.ScanManager;
 
@@ -60,12 +63,19 @@ public class ReviewRegisterFragment  extends Fragment {
                 reviewText = reviewEditText.getText().toString();
                 starPoint = (double) ratingBar.getRating();
                 level = MemberManager.getInstance().getLevel();
+                if(MemberManager.getInstance().getIsLogin() == false){
+                    Toast.makeText(v.getContext(), "로그인을 먼저 하세요", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(v.getContext(), LoginActivity.class);
+                    startActivity(i);
+                    return;
+                }
                 if (reviewText.equals("") || starPoint == 0)
                     Toast.makeText(v.getContext(), "리뷰와 별점을 입력해주세요", Toast.LENGTH_LONG).show();
                 else {
-                    NetworkManager.getInstance().reviewRegister(v.getContext(), id, reviewText, barcode, starPoint, productUrl, memberUrl, level, new NetworkManager.OnResultResponseListener<Review>() {
+                    NetworkManager.getInstance().reviewRegister(getContext(), id, reviewText, barcode, starPoint, productUrl, memberUrl, level, new NetworkManager.OnResultResponseListener<Review>() {
                         @Override
                         public void onSuccess(Review result) {
+                            if(result == null)Toast.makeText(getContext(), "하루에 등록 가능한 리뷰의 수를 초과했습니다.", Toast.LENGTH_LONG).show();
                             ((ReviewActivityTest)getActivity()).setCurrentItem(0, true);
                         }
                         @Override

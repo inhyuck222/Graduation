@@ -32,11 +32,6 @@
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <!-- 수정 된 ManiFest -->
-        <activity
-            android:name="zebra.activity.ReviewActivity"
-            android:label="ReviewActivity"
-            android:launchMode="singleInstance"
-            android:theme="@style/AppTheme"></activity>
 
         <activity
             android:name="zebra.activity.LoginActivity"
@@ -58,7 +53,7 @@
 
         <activity
             android:name="zebra.activity.ReviewActivityTest"
-            android:label="SearchActivity"
+            android:label="ReviewActivityTest"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme"></activity>
     </application>

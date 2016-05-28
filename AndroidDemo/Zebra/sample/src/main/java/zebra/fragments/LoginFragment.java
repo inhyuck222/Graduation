@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import example.zxing.R;
 import zebra.json.Login;
+import zebra.manager.MemberManager;
 import zebra.manager.PropertyManager;
 import zebra.manager.NetworkManager;
 
@@ -75,6 +76,8 @@ public class LoginFragment extends Fragment {
                             }
 
                             PropertyManager.getInstance().setIsLogin(true);
+                            MemberManager.getInstance().setIsLogin(true);
+
                             Toast.makeText(getActivity(), "로그인 성공", Toast.LENGTH_LONG).show();
 
                             getActivity().finish();

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -83,8 +84,16 @@ public class ReviewActivityTest extends AppCompatActivity {
         pager = (ViewPager)findViewById(R.id.pager);
         mAdapter = new ReviewTabsAdapter(this, getSupportFragmentManager(), tabHost, pager);
 
-        mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("", ResourcesCompat.getDrawable(getResources(), R.drawable.zebra_icon_logo, null)), ReviewFragment.class, null);
-        mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("",ResourcesCompat.getDrawable(getResources(), R.drawable.zebra_icon_logo, null)), ReviewRegisterFragment.class, null);
+        mAdapter.addTab(tabHost.newTabSpec("tab1").setIndicator("리뷰"), ReviewFragment.class, null);
+        mAdapter.addTab(tabHost.newTabSpec("tab2").setIndicator("리뷰 등록"), ReviewRegisterFragment.class, null);
+
+        TextView review = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        review.setTextSize(18);
+        review.setTextColor(ContextCompat.getColor(this, R.color.text_white));
+        TextView reviewRegister = (TextView) tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+        reviewRegister.setTextSize(18);
+        reviewRegister.setTextColor(ContextCompat.getColor(this, R.color.text_white));
+
         setTabColor(tabHost);
 
         mAdapter.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -191,10 +200,8 @@ public class ReviewActivityTest extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Log.d("ReviewActivity", "Cancelled scan");
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Log.d("ReviewActivity", "Scanned");
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
                 //ScanManager에 barcode를 set
@@ -203,7 +210,6 @@ public class ReviewActivityTest extends AppCompatActivity {
                 network();
             }
         } else {
-            Log.d("ReviewActivity", "Cancelled scan");
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);

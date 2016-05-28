@@ -59,7 +59,6 @@ public class NetworkManager {
     private static final String SERVER_URL = "http://113.198.84.84:8080/ZEBRA/";
 
     private static final String LOGIN_URL = SERVER_URL + "/appLogin";
-
     public void login(final Context context, String id, String password, final OnResultResponseListener<Login> listener) {
         RequestParams params = new RequestParams();
         params.put("id", id);
@@ -101,7 +100,12 @@ public class NetworkManager {
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 String jsonResponseString = responseString.replaceAll("[\n \r]", "");
                 Review result = gson.fromJson(jsonResponseString, Review.class);
-                listener.onSuccess(result);
+                if(result.reviews == null){
+                    result = null;
+                    listener.onSuccess(result);
+                }else {
+                    listener.onSuccess(result);
+                }
             }
         });
     }

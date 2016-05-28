@@ -13,7 +13,7 @@ public class MemberManager {
     }
 
     private MemberManager(){
-        id=null;
+
     }
 
     String id;
@@ -25,6 +25,7 @@ public class MemberManager {
     String memberUrl;
     int reviewCount;
     int totalReviewCount;
+    boolean isLogin;
 
     public void setId(String id) {
         this.id = id;
@@ -108,6 +109,13 @@ public class MemberManager {
         String memberUrl = null;
         int reviewCount = 0;
         int totalReviewCount = 0;
+    }
 
+    public boolean getIsLogin(){
+        return isLogin;
+    }
+
+    public void setIsLogin(boolean isLogin){
+        this.isLogin = isLogin;
     }
 }

@@ -52,6 +52,7 @@ public class ProductRegisterActivity extends AppCompatActivity{
         barcodeText.setText("상품 바코드 : "+ barcode);
         id = MemberManager.getInstance().getId();
 
+        //등록 버튼 클릭
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,20 +60,24 @@ public class ProductRegisterActivity extends AppCompatActivity{
                 NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, id, barcode, productName, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {
+                        //로그인이 안된 상태에서 상품 등록을 요청
+                        if(MemberManager.getInstance().getIsLogin() == false) {
+                            Toast.makeText(ProductRegisterActivity.this, "상품을 등록 하시려면 로그인을 하세요.", Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(ProductRegisterActivity.this, LoginActivity.class);
+                            startActivity(i);
+                        }
                         if(result.equals("{\"result\":\"\"}")){
                             Toast.makeText(ProductRegisterActivity.this, "이미 등록 요청 된 상품입니다.", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
                         } else {
-                            //result 값에 따라 토스트 값을 상품 등록 감사와 이미 등록 요청 된 상품 입니다로 나누기
                             Toast.makeText(ProductRegisterActivity.this, "소중한 상품 등록 감사합니다!!", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
                         }
                     }
-
                     @Override
                     public void onFail(int code) {
                         Toast.makeText(ProductRegisterActivity.this, "실패실패 띠띠띠 "+code, Toast.LENGTH_LONG).show();

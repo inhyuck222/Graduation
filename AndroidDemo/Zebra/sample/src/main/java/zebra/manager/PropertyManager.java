@@ -71,6 +71,7 @@ public class PropertyManager{
         MemberManager.getInstance().setMemberUrl(result.member.memberUrl);
         MemberManager.getInstance().setReviewCount(result.member.reviewCount);
         MemberManager.getInstance().setTotalReviewCount(result.member.totalReviewCount);
+        MemberManager.getInstance().setIsLogin(true);
     }
 
     public void setMemberInfoToMemManager(){
@@ -83,12 +84,21 @@ public class PropertyManager{
         MemberManager.getInstance().setMemberUrl(mPrefs.getString("memberUrl", null));
         MemberManager.getInstance().setReviewCount(mPrefs.getInt("reviewCount", 0));
         MemberManager.getInstance().setTotalReviewCount(mPrefs.getInt("totalReviewCount", 0));
+        MemberManager.getInstance().setIsLogin(true);
     }
 
     public void setLogOut(){
         if(mPrefs == null)return;
         MemberManager.getInstance().clearMemberInfo();
-        mEditor.clear();
+        mEditor.putString("id", "");
+        mEditor.putString("name", "");
+        mEditor.putString("phoneNumber", "");
+        mEditor.putInt("point", 0);
+        mEditor.putString("level", "");
+        mEditor.putString("lastReviewDate", "");
+        mEditor.putString("memberUrl", "");
+        mEditor.putInt("reviewCount", 0);
+        mEditor.putInt("totalReviewCount", 0);
         mEditor.commit();
     }
 
