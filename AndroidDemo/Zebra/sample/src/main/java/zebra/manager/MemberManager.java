@@ -13,7 +13,7 @@ public class MemberManager {
     }
 
     private MemberManager(){
-
+        id=null;
     }
 
     String id;
