@@ -11,6 +11,8 @@ public class ReviewData implements Parcelable {
     public String reviewText;
     public double starPoint;
     public String memberUrl;
+    public String level;
+    public String productUrl;
 
     @Override
     public int describeContents() {
@@ -25,6 +27,8 @@ public class ReviewData implements Parcelable {
         reviewText = in.readString();
         starPoint = in.readDouble();
         memberUrl = in.readString();
+        level = in.readString();
+        productUrl = in.readString();
     }
 
     @Override
@@ -33,6 +37,8 @@ public class ReviewData implements Parcelable {
         dest.writeString(reviewText);
         dest.writeDouble(starPoint);
         dest.writeString(memberUrl);
+        dest.writeString(level);
+        dest.writeString(productUrl);
     }
 
     public static final Parcelable.Creator<ReviewData> CREATOR

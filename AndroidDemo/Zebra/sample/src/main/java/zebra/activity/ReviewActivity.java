@@ -23,7 +23,6 @@ import example.zxing.R;
 import zebra.adapters.NaviAdapter;
 import zebra.beans.NaviItem;
 import zebra.beans.ReviewHeaderItem;
-import zebra.dialog.ReviewDialog;
 import zebra.json.Review;
 import zebra.manager.ScanManager;
 import zebra.manager.NetworkManager;

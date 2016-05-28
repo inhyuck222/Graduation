@@ -25,7 +25,6 @@ import example.zxing.R;
 import zebra.adapters.NaviAdapter;
 import zebra.adapters.ReviewTabsAdapter;
 import zebra.beans.NaviItem;
-import zebra.beans.ReviewItem;
 import zebra.fragments.ReviewFragment;
 import zebra.fragments.ReviewRegisterFragment;
 import zebra.json.Review;
@@ -75,7 +74,7 @@ public class ReviewActivityTest extends AppCompatActivity {
         ReviewManager.getInstance().setReview(result);
 
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(android.R.id.tabcontent, new ReviewFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(android.R.id.tabcontent, new ReviewFragment()).commit();
         }
 
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -104,11 +103,11 @@ public class ReviewActivityTest extends AppCompatActivity {
     }
 
     public void pushReviewFragment() {
-        getFragmentManager().beginTransaction().replace(android.R.id.tabcontent, new ReviewFragment()).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.tabcontent, new ReviewFragment()).addToBackStack(null).commit();
     }
 
     public void pushReviewRegisterFragment() {
-        getFragmentManager().beginTransaction().replace(android.R.id.tabcontent, new ReviewRegisterFragment()).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.tabcontent, new ReviewRegisterFragment()).addToBackStack(null).commit();
     }
 
     public void popFragment() {
@@ -167,9 +166,9 @@ public class ReviewActivityTest extends AppCompatActivity {
 
     public void setTabColor(TabHost tabhost) {
         for(int i=0;i<tabhost.getTabWidget().getChildCount();i++) {
-            tabhost.getTabWidget().getChildAt(i).setBackgroundColor(ContextCompat.getColor(ReviewActivityTest.this, R.color.primary)); //unselected
+            tabhost.getTabWidget().getChildAt(i).setBackgroundColor(ContextCompat.getColor(ReviewActivityTest.this, R.color.accent_pressed)); //unselected
         }
-        tabhost.getTabWidget().getChildAt(tabhost.getCurrentTab()).setBackgroundColor(ContextCompat.getColor(ReviewActivityTest.this, R.color.accent_pressed)); // selected
+        tabhost.getTabWidget().getChildAt(tabhost.getCurrentTab()).setBackgroundColor(ContextCompat.getColor(ReviewActivityTest.this, R.color.primary)); // selected
     }
 
     @Override
@@ -239,5 +238,9 @@ public class ReviewActivityTest extends AppCompatActivity {
                 Toast.makeText(ReviewActivityTest.this, "실패 "+code, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void setCurrentItem(int item, boolean smoothScroll) {
+        pager.setCurrentItem(item, smoothScroll);
     }
 }

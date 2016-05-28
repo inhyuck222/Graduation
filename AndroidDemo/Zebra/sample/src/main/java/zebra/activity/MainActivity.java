@@ -181,13 +181,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Review result) {
                 if(result.productInfo==null){
-                    Toast.makeText(MainActivity.this, "등록 된 상품이 없습니다.", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(MainActivity.this, ProductRegisterActivity.class);
-                    startActivity(i);
-                }else if(result == null){
-                    Toast.makeText(MainActivity.this, "등록 대기중", Toast.LENGTH_LONG).show();
-                }
-                else{
+                    if(MemberManager.getInstance().getId() == null){
+                        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(i);
+                    }else {
+                        Toast.makeText(MainActivity.this, "등록 된 상품이 없습니다.", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(MainActivity.this, ProductRegisterActivity.class);
+                        startActivity(i);
+                    }
+                } else{
                     Intent i = new Intent(MainActivity.this, ReviewActivityTest.class);
                     ScanManager.getInstance().setProductUrl(result.productInfo.productUrl);
                     i.putExtra("Result", result);

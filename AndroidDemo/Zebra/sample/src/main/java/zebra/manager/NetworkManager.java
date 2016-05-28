@@ -81,7 +81,7 @@ public class NetworkManager {
 
     private static final String REVIEW_REGISTER_URL = SERVER_URL + "/appReviewRegister";
 
-    public void reviewRegister(Context context, String id, String reviewText, String barcode, double starPoint, String productUrl, String memberUrl, final OnResultResponseListener<Review> listener) {
+    public void reviewRegister(Context context, String id, String reviewText, String barcode, double starPoint, String productUrl, String memberUrl, String level, final OnResultResponseListener<Review> listener) {
         RequestParams params = new RequestParams();
         params.put("id", id);
         params.put("reviewText", reviewText);
@@ -89,6 +89,7 @@ public class NetworkManager {
         params.put("starPoint", starPoint);
         params.put("memberUrl", memberUrl);
         params.put("productUrl", productUrl);
+        params.put("level", level);
 
         client.post(context, REVIEW_REGISTER_URL, params, new TextHttpResponseHandler() {
             @Override
@@ -133,9 +134,9 @@ public class NetworkManager {
 
     private static final String PRODUCT_REGISTER_URL = SERVER_URL + "/appProductRegister";
 
-    public void productRegister(Context context, String barcode, String productName, final OnResultListener<String> listener) {
+    public void productRegister(Context context, String id, String barcode, String productName, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
-        params.put("id", "a");
+        params.put("id", id);
         params.put("barcode", barcode);
         params.put("productName", productName);
 
