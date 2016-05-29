@@ -44,8 +44,8 @@ public class PropertyManager{
         return isLogin;
     }
 
-    public boolean getAutoLogin(){
-        if(mPrefs == null)return false;
+    public boolean getAutoLogin(Context context){
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         return mPrefs.getBoolean(KEY_AUTO_LOGIN, false);
     }
 
@@ -71,7 +71,7 @@ public class PropertyManager{
         MemberManager.getInstance().setMemberUrl(result.member.memberUrl);
         MemberManager.getInstance().setReviewCount(result.member.reviewCount);
         MemberManager.getInstance().setTotalReviewCount(result.member.totalReviewCount);
-        MemberManager.getInstance().setIsLogin(true);
+        //MemberManager.getInstance().setIsLogin(true);
     }
 
     public void setMemberInfoToMemManager(){
@@ -79,6 +79,7 @@ public class PropertyManager{
         MemberManager.getInstance().setName(mPrefs.getString("name", null));
         MemberManager.getInstance().setPhoneNumber(mPrefs.getString("phoneNumber", null));
         MemberManager.getInstance().setPoint(mPrefs.getInt("point", 0));
+        int i = mPrefs.getInt("point", 0);
         MemberManager.getInstance().setLevel(mPrefs.getString("level", null));
         MemberManager.getInstance().setLastReviewDate(mPrefs.getString("lastReviewDate", null));
         MemberManager.getInstance().setMemberUrl(mPrefs.getString("memberUrl", null));

@@ -7,20 +7,22 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import zebra.beans.CategoryItem;
-import zebra.views.CategoryItemView;
+import zebra.beans.SearchItem;
+import zebra.views.SearchItemView;
 
 /**
- * Created by multimedia on 2016-05-27.
+ * Created by multimedia on 2016-05-29.
  */
-public class CategoryAdapter extends BaseAdapter {
+public class CategorySearchAdapter extends BaseAdapter {
 
-    private List<CategoryItem> items = new ArrayList<CategoryItem>();
+    private List<SearchItem> items = new ArrayList<SearchItem>();
 
-    public void add(CategoryItem item) {
+
+    public void add(SearchItem item) {
         items.add(item);
         notifyDataSetChanged();
     }
+
     @Override
     public int getCount() {
         return items.size();
@@ -38,12 +40,12 @@ public class CategoryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        CategoryItemView view = null;
+        SearchItemView view = null;
 
         if (convertView == null) {
-            view = new CategoryItemView(parent.getContext());
+            view = new SearchItemView(parent.getContext());
         } else {
-            view = (CategoryItemView) convertView;
+            view = (SearchItemView) convertView;
         }
         view.setViewItem(items.get(position));
 

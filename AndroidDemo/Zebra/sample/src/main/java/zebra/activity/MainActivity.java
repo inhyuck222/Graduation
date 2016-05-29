@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(loginIntent);
             }
         });
-
         barcodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,9 +70,10 @@ public class MainActivity extends AppCompatActivity {
         categoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent categoryItent = new Intent(MainActivity.this, CategoryActivity.class);
+                startActivity(categoryItent);
             }
         });
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,19 +82,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setToolbar(true);
+
 
         //자동 로그인일 경우에 설정
+        if(PropertyManager.getInstance().getAutoLogin(MainActivity.this))PropertyManager.getInstance().setMemberInfoToMemManager();
+/*
         if (PropertyManager.getInstance().getAutoLogin()){
-            MemberManager.getInstance().setIsLogin(true);
             PropertyManager.getInstance().setMemberInfoToMemManager();
+            MemberManager.getInstance().setIsLogin(true);
         }
+        */
+
+        setToolbar(true);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         setToolbar(false);
+        if (PropertyManager.getInstance().getAutoLogin(MainActivity.this)){
+            MemberManager.getInstance().setIsLogin(true);
+            PropertyManager.getInstance().setMemberInfoToMemManager();
+        }
     }
 
     void setToolbar(boolean isFirst) {
@@ -124,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (i == 3) {
                 //if(PropertyManager.getInstance().getAutoLogin() || PropertyManager.getInstance().getIsLogin()){
-                if (MemberManager.getInstance().getIsLogin() == true) {
+                if(PropertyManager.getInstance().getIsLogin()) {
                     NaviItem item = new NaviItem(R.drawable.logout, "로그아웃");
                     naviAdapter.add(item);
                 } else {

@@ -1,45 +1,57 @@
 package zebra.fragments;
 
-import android.app.Fragment;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import example.zxing.R;
-import zebra.adapters.CategoryAdapter;
-import zebra.beans.CategoryItem;
+import zebra.activity.CategoryActivity;
+import zebra.json.Search;
+import zebra.manager.NetworkManager;
+import zebra.manager.SearchManager;
 
 /**
  * Created by multimedia on 2016-05-27.
  */
 public class CategoryFragment extends Fragment {
-    GridView gridView;
-    CategoryAdapter mAdapter;
+    LinearLayout bookButton;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_category, container, false);
 
-        setGridView(v);
-
+        bookButton = (LinearLayout)v.findViewById(R.id.bookButton);
+        bookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                network("1");
+                Toast.makeText((CategoryActivity)getActivity(), "눌림", Toast.LENGTH_LONG).show();
+            }
+        });
 
         return v;
     }
 
-    private void setGridView(View v){
-        gridView = (GridView) v.findViewById(R.id.gridView);
-        mAdapter = new CategoryAdapter();
-        gridView.setAdapter(mAdapter);
+    public void network(String category){
+        NetworkManager.getInstance().category((CategoryActivity)getActivity(), category, new NetworkManager.OnResultResponseListener<Search>() {
+            @Override
+            public void onSuccess(Search result) {
+                ((CategoryActivity)getActivity()).popFragment();
+                SearchManager.getInstance().setSearch(result);
+                ((CategoryActivity)getActivity()).pushCategorySearchFragment();
+            }
 
-        for (int i = 0; i < 10; i++) {
-            CategoryItem item = new CategoryItem("","야미야미");
-            mAdapter.add(item);
-        }
+            @Override
+            public void onFail(int code, String responseString) {
+                Toast.makeText((CategoryActivity)getActivity(), "실패"+code, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

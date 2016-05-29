@@ -10,6 +10,8 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 
+import org.junit.experimental.categories.Category;
+
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.HttpClient;
 import zebra.json.Login;
@@ -169,6 +171,27 @@ public class NetworkManager {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode, responseString);
                 Toast.makeText(context, "실패 "+statusCode, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Toast.makeText(context, "성공 "+statusCode, Toast.LENGTH_LONG).show();
+                String jsonResponseString = responseString.replaceAll("[\n \r]", "");
+                Search result = gson.fromJson(jsonResponseString, Search.class);
+                listener.onSuccess(result);
+            }
+        });
+    }
+    private static final String CATEGORY_URL = SERVER_URL + "/appCategory";
+
+    public void category(final Context context, String category, final OnResultResponseListener<Search> listener){
+        RequestParams params = new RequestParams();
+        params.put("category", category);
+
+        client.post(context, CATEGORY_URL, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
             }
 
             @Override

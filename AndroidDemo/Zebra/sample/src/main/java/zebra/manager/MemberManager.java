@@ -109,6 +109,7 @@ public class MemberManager {
         String memberUrl = null;
         int reviewCount = 0;
         int totalReviewCount = 0;
+        setIsLogin(false);
     }
 
     public boolean getIsLogin(){

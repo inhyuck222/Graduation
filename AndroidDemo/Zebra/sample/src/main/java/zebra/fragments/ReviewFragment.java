@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import example.zxing.R;
@@ -37,6 +38,7 @@ public class ReviewFragment extends Fragment {
         result = ReviewManager.getInstance().getReview();
 
         setListView(view);
+
         return view;
     }
 

@@ -15,6 +15,10 @@ import example.zxing.R;
 import zebra.adapters.NaviAdapter;
 import zebra.beans.NaviItem;
 import zebra.fragments.CategoryFragment;
+import zebra.fragments.CategorySearchFragment;
+import zebra.json.Search;
+import zebra.manager.NetworkManager;
+import zebra.manager.SearchManager;
 import zebra.views.NaviHeaderView;
 
 /**
@@ -35,12 +39,16 @@ public class CategoryActivity extends AppCompatActivity{
         setToolbar();
 
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(R.id.container, new CategoryFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.container, new CategoryFragment()).commit();
         }
     }
 
     public void pushCategoryFragment() {
-        getFragmentManager().beginTransaction().replace(R.id.container, new CategoryFragment()).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new CategoryFragment()).addToBackStack(null).commit();
+    }
+
+    public void pushCategorySearchFragment() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new CategorySearchFragment()).addToBackStack(null).commit();
     }
 
     public void popFragment() {
