@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         barcodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                networkMyPage();
-                //new IntentIntegrator(MainActivity.this).setCaptureActivity(ToolbarCaptureActivity.class).initiateScan();
+                //networkMyPage();
+                new IntentIntegrator(MainActivity.this).setCaptureActivity(ToolbarCaptureActivity.class).initiateScan();
             }
         });
         categoryButton.setOnClickListener(new View.OnClickListener() {
@@ -83,17 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(searchIntent);
             }
         });
-
-
-
-        //자동 로그인일 경우에 설정
-        //if(PropertyManager.getInstance().getAutoLogin(MainActivity.this))PropertyManager.getInstance().setMemberInfoToMemManager();
-/*
-        if (PropertyManager.getInstance().getAutoLogin()){
-            PropertyManager.getInstance().setMemberInfoToMemManager();
-            MemberManager.getInstance().setIsLogin(true);
-        }
-        */
 
         setToolbar(true);
     }
@@ -130,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 naviAdapter.add(item);
             }
             if (i == 3) {
-                if(PropertyManager.getInstance().getIsLogin()) {
+                if(MemberManager.getInstance().getIsLogin()) {
                     NaviItem item = new NaviItem(R.drawable.logout, "로그아웃");
                     naviAdapter.add(item);
                 } else {
@@ -145,9 +134,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 4:
-                        PropertyManager.getInstance().setAutoLogin(MainActivity.this, false);
-                        PropertyManager.getInstance().setIsLogin(false);
-                        PropertyManager.getInstance().setLogOut();
+                        MemberManager.getInstance().clearMemberInfo();
                         //로그아웃 일 경우에 toolbar를 다시 설정
                         setToolbar(false);
                 }

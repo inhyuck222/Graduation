@@ -8,19 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import java.util.List;
-
 import example.zxing.R;
-import zebra.activity.MyPageActivity;
 import zebra.adapters.MyReviewAdapter;
-import zebra.adapters.ReviewAdapter;
 import zebra.beans.MyReviewItem;
-import zebra.data.ReviewData;
 import zebra.json.MyReview;
-import zebra.json.Review;
 import zebra.manager.MemberManager;
-import zebra.manager.NetworkManager;
-import zebra.views.ReviewHeaderView;
 
 /**
  * Created by multimedia on 2016-05-29.
