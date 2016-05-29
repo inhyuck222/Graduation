@@ -1,5 +1,11 @@
 package zebra.manager;
 
+import java.util.List;
+
+import zebra.data.ReviewData;
+import zebra.json.MyReview;
+import zebra.json.Review;
+
 /**
  * Created by multimedia on 2016-05-21.
  */
@@ -26,6 +32,16 @@ public class MemberManager {
     int reviewCount;
     int totalReviewCount;
     boolean isLogin;
+
+    public MyReview reviews;
+
+    public void setReviews (MyReview review){
+        this.reviews = review;
+    }
+
+    public MyReview getReviews(){
+        return reviews;
+    }
 
     public void setId(String id) {
         this.id = id;
