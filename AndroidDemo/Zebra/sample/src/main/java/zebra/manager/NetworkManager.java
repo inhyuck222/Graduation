@@ -155,14 +155,11 @@ public class NetworkManager {
 
     private static final String PRODUCT_REGISTER_URL = SERVER_URL + "/appProductRegister";
 
-    public void productRegister(Context context, String id, String barcode, String productName, double starPoint, String reviewText, String level, final OnResultListener<String> listener) {
+    public void productRegister(Context context, String id, String barcode, String productName, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
         params.put("id", id);
         params.put("barcode", barcode);
         params.put("productName", productName);
-        params.put("starPoint", starPoint);
-        params.put("reviewText", reviewText);
-        params.put("level", level);
 
         client.post(context, PRODUCT_REGISTER_URL, params, new TextHttpResponseHandler() {
             @Override
@@ -227,7 +224,7 @@ public class NetworkManager {
 
     public void myReview(final Context context, String id, final OnResultResponseListener<MyReview> listener) {
         RequestParams params = new RequestParams();
-        params.put("id", "a");
+        params.put("id", id);
 
         client.post(context, MY_REVIEW, params, new TextHttpResponseHandler() {
             @Override

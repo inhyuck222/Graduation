@@ -16,6 +16,7 @@ import android.widget.Toast;
 import example.zxing.R;
 import zebra.activity.LoginActivity;
 import zebra.activity.ReviewActivityTest;
+import zebra.adapters.ReviewTabsAdapter;
 import zebra.json.Review;
 import zebra.manager.MemberManager;
 import zebra.manager.NetworkManager;
@@ -75,8 +76,12 @@ public class ReviewRegisterFragment  extends Fragment {
                     NetworkManager.getInstance().reviewRegister(getContext(), id, reviewText, barcode, starPoint, productUrl, memberUrl, level, new NetworkManager.OnResultResponseListener<Review>() {
                         @Override
                         public void onSuccess(Review result) {
-                            if(result == null)Toast.makeText(getContext(), "하루에 등록 가능한 리뷰의 수를 초과했습니다.", Toast.LENGTH_LONG).show();
-                            ((ReviewActivityTest)getActivity()).setCurrentItem(0, true);
+                            if(result == null){
+                                Toast.makeText(getContext(), "하루에 등록 가능한 리뷰의 수를 초과했습니다.", Toast.LENGTH_LONG).show();
+                                return;
+                            }else {
+                                ((ReviewActivityTest) getActivity()).setCurrentItem(0, true);
+                            }
                         }
                         @Override
                         public void onFail(int code, String responseString) {

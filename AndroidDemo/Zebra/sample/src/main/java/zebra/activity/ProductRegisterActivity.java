@@ -28,13 +28,9 @@ import zebra.views.NaviHeaderView;
  * Created by multimedia on 2016-05-22.
  */
 public class ProductRegisterActivity extends AppCompatActivity{
-    EditText productNameEdit, reviewEditText;
+    EditText productNameEdit;
     Button registerButton, cancelButton;
-    String barcode, productName, id, level;
-    AppCompatRatingBar ratingBar;
-
-    double starPoint;
-    String reviewText;
+    String barcode, productName, id;
 
     //for toolbar
     DrawerLayout mDrawerLayout;
@@ -48,24 +44,19 @@ public class ProductRegisterActivity extends AppCompatActivity{
         setContentView(R.layout.activity_register);
 
         productNameEdit = (EditText)findViewById(R.id.productNameEdit);
-        reviewEditText = (EditText)findViewById(R.id.reviewEditText);
         registerButton = (Button)findViewById(R.id.registerButton);
         cancelButton = (Button)findViewById(R.id.cancelButton);
-        ratingBar = (AppCompatRatingBar)findViewById(R.id.ratingBar);
 
         barcode = ScanManager.getInstance().getBarcode();
         id = MemberManager.getInstance().getId();
-        level = MemberManager.getInstance().getLevel();
 
         //등록 버튼 클릭
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 productName = productNameEdit.getText().toString();
-                reviewText = reviewEditText.getText().toString();
-                starPoint = (double)ratingBar.getRating();
 
-                NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, id, barcode, productName, starPoint, reviewText, level, new NetworkManager.OnResultListener<String>() {
+                NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, id, barcode, productName, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {
                         /*if(result.equals("{\"result\":\"\"}")){
