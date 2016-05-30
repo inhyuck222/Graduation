@@ -133,7 +133,12 @@ public class NetworkManager {
                 if (jsonResponseString.equals("exist")) {
                     Review result = null;
                     listener.onSuccess(result);
-                } else {
+                } else if(jsonResponseString.equals("{\"reviews\":null,\"productInfo\":null}")){
+                    Review result = new Review();
+                    result.productInfo.productName = "nothingApply";
+                    listener.onSuccess(result);
+                }
+                else {
                     Review result = gson.fromJson(jsonResponseString, Review.class);
                     listener.onSuccess(result);
                 }

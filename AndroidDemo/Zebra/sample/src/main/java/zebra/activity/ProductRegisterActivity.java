@@ -67,29 +67,21 @@ public class ProductRegisterActivity extends AppCompatActivity{
                 NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, id, barcode, productName, starPoint, reviewText, level, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {
-                        //로그인이 안된 상태에서 상품 등록을 요청
-                        /*
-                        if(MemberManager.getInstance().getIsLogin() == false) {
-                            Toast.makeText(ProductRegisterActivity.this, "상품을 등록 하시려면 로그인을 하세요.", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(ProductRegisterActivity.this, LoginActivity.class);
-                            startActivity(i);
-                        }
-                        */
-                        if(result.equals("{\"result\":\"\"}")){
+                        /*if(result.equals("{\"result\":\"\"}")){
                             Toast.makeText(ProductRegisterActivity.this, "이미 등록 요청 된 상품입니다.", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
-                        } else {
+                        } else {*/
                             Toast.makeText(ProductRegisterActivity.this, "소중한 상품 등록 감사합니다!!", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
-                        }
+                        //}
                     }
                     @Override
                     public void onFail(int code) {
-                        Toast.makeText(ProductRegisterActivity.this, "실패실패 띠띠띠 "+code, Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProductRegisterActivity.this, "실패 "+code, Toast.LENGTH_LONG).show();
                     }
                 });
             }

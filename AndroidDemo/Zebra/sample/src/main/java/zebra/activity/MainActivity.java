@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
     String barcode;
 
+    TextView myText;
+
     //for toolbar
     DrawerLayout mDrawerLayout;
     ListView mDrawerList;
@@ -54,10 +57,15 @@ public class MainActivity extends AppCompatActivity {
         barcodeButton = (LinearLayout)findViewById(R.id.barcodeButton);
         categoryButton = (LinearLayout)findViewById(R.id.categoryButton);
         searchButton = (LinearLayout)findViewById(R.id.searchButton);
+        myText = (TextView)findViewById(R.id.myText);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(MemberManager.getInstance().getIsLogin()){
+                    networkMyPage();
+                    return;
+                }
                 Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
             }
@@ -91,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setToolbar(false);
+        if(MemberManager.getInstance().getIsLogin()){
+            myText.setText("My Page");
+        }
     }
 
     void setToolbar(boolean isFirst) {
@@ -195,7 +206,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     Intent i = new Intent(MainActivity.this, ProductRegisterActivity.class);
                     startActivity(i);
-                } else { //리뷰 get
+                } else if(result.productInfo.productName.equals("nothingApply")){
+                    Toast.makeText(MainActivity.this, "이미 등록 요청 된 상품입니다.", Toast.LENGTH_LONG).show();
+                }else { //리뷰 get
                     Intent i = new Intent(MainActivity.this, ReviewActivityTest.class);
                     ScanManager.getInstance().setProductUrl(result.productInfo.productUrl);
                     i.putExtra("Result", result);
