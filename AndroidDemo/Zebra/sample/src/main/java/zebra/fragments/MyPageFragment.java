@@ -6,11 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -38,13 +40,14 @@ public class MyPageFragment extends Fragment {
         point = (TextView)view.findViewById(R.id.point);
         profileImageView = (ImageView)view.findViewById(R.id.profileImageView);
 
-        setProfile();
+        setProfile(view);
 
         return view;
     }
 
-    public void setProfile(){
+    public void setProfile(View view){
         id.setText(MemberManager.getInstance().getId());
+
         levelString = MemberManager.getInstance().getLevel();
         level.setText(levelString);
         if(levelString.equals("Gold")){
@@ -54,11 +57,12 @@ public class MyPageFragment extends Fragment {
         } else {
 
         }
-        name.setText(MemberManager.getInstance().getName());
-        point.setText(MemberManager.getInstance().getPoint()+"");
 
-        /*
-        Glide.with(getContext()).load(MemberManager.getInstance().getMemberUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(profileImageView) {
+        name.setText(MemberManager.getInstance().getName());
+
+        point.setText(MemberManager.getInstance().getPoint() + "");
+
+        Glide.with(view.getContext()).load(MemberManager.getInstance().getMemberUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(profileImageView) {
             @Override
             protected void setResource(Bitmap resource) {
                 RoundedBitmapDrawable circularBitmapDrawable =
@@ -67,6 +71,5 @@ public class MyPageFragment extends Fragment {
                 profileImageView.setImageDrawable(circularBitmapDrawable);
             }
         });
-        */
     }
 }

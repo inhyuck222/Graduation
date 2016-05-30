@@ -62,8 +62,9 @@ public class ProductRegisterActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 productName = productNameEdit.getText().toString();
-                starPoint = (double)ratingBar.getRating();
                 reviewText = reviewEditText.getText().toString();
+                starPoint = (double)ratingBar.getRating();
+
                 NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, id, barcode, productName, starPoint, reviewText, level, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {

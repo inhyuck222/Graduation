@@ -47,16 +47,6 @@ public class ReviewActivityTest extends AppCompatActivity {
     NaviAdapter naviAdapter;
     ActionBarDrawerToggle mDrawerToggle;
 
-    // Pager tab define
-    private static final String TAB_TAG = "currentTab";
-    private static final String TAB_ID_FLAG = "tab_flag";
-    private static final String TAB_ID_FILEMNG = "tab_filemng";
-    private static final String TAB_ID_SETTINGS = "tab_settings";
-
-    // Intent Extra define
-    public static final String EXTRA_KEY_WHOS_PAGE = "whosPage";
-    public static final String EXTRA_VALUE_MYPAGE = "myPage";
-
     // Tab Pager
     TabHost tabHost;
     ViewPager pager;

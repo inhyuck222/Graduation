@@ -1,5 +1,6 @@
 package zebra.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.TextUtils;
@@ -68,12 +69,14 @@ public class LoginFragment extends Fragment {
                     NetworkManager.getInstance().login(v.getContext(), id, password, new NetworkManager.OnResultResponseListener<Login>() {
                         @Override
                         public void onSuccess(Login result) {
-
-                            MemberManager.getInstance().memberSet(result);
-
-                            Toast.makeText(getActivity(), "로그인 성공", Toast.LENGTH_LONG).show();
-
-                            getActivity().finish();
+                            if(result == null){
+                                Toast.makeText( ((LoginActivity)getActivity()), "아이디와 비밀번호를 확인 하세요", Toast.LENGTH_LONG).show();
+                                return;
+                            }else {
+                                MemberManager.getInstance().memberSet(result);
+                                Toast.makeText(getActivity(), "로그인 성공", Toast.LENGTH_LONG).show();
+                                getActivity().finish();
+                            }
 
                             /*
                             if (autoLoginCheck.isChecked()) {

@@ -1,6 +1,7 @@
 package zebra.manager;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -77,8 +78,14 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 String jsonResponseString = responseString.replaceAll("[\n \r]", "");
-                Login result = gson.fromJson(jsonResponseString, Login.class);
-                listener.onSuccess(result);
+                if(jsonResponseString.equals("{\"member\":null}")){
+                    Login result = null;
+                    listener.onSuccess(result);
+                }
+                else {
+                    Login result = gson.fromJson(jsonResponseString, Login.class);
+                    listener.onSuccess(result);
+                }
             }
         });
     }
@@ -130,10 +137,10 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 String jsonResponseString = responseString.replaceAll("[\n \r]", "");
-                if (jsonResponseString.equals("exist")) {
+                if (jsonResponseString.equals("{\"result\":\"null\"}")){
                     Review result = null;
                     listener.onSuccess(result);
-                } else if(jsonResponseString.equals("{\"reviews\":null,\"productInfo\":null}")){
+                } else if(jsonResponseString.equals("{\"result\":\"existApply\"}")){
                     Review result = new Review();
                     result.productInfo.productName = "nothingApply";
                     listener.onSuccess(result);
