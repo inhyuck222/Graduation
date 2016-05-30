@@ -185,9 +185,14 @@ public class MainActivity extends AppCompatActivity {
         NetworkManager.getInstance().review(this, barcode, new NetworkManager.OnResultResponseListener<Review>() {
             @Override
             public void onSuccess(Review result) {
-
                 //등록 된 상품이 없는 경우
                 if (result.productInfo == null) {
+                    if(MemberManager.getInstance().getIsLogin() == false){
+                        Toast.makeText(MainActivity.this, "로그인을 먼저 하세요.", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        return;
+                    }
                     Intent i = new Intent(MainActivity.this, ProductRegisterActivity.class);
                     startActivity(i);
                 } else { //리뷰 get

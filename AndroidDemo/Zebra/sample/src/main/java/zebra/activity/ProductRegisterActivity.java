@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,10 +28,13 @@ import zebra.views.NaviHeaderView;
  * Created by multimedia on 2016-05-22.
  */
 public class ProductRegisterActivity extends AppCompatActivity{
-    TextView barcodeText;
-    EditText productNameEdit;
+    EditText productNameEdit, reviewEditText;
     Button registerButton, cancelButton;
-    String barcode, productName, id;
+    String barcode, productName, id, level;
+    AppCompatRatingBar ratingBar;
+
+    double starPoint;
+    String reviewText;
 
     //for toolbar
     DrawerLayout mDrawerLayout;
@@ -43,29 +47,34 @@ public class ProductRegisterActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        barcodeText = (TextView)findViewById(R.id.barcodeText);
         productNameEdit = (EditText)findViewById(R.id.productNameEdit);
+        reviewEditText = (EditText)findViewById(R.id.reviewEditText);
         registerButton = (Button)findViewById(R.id.registerButton);
         cancelButton = (Button)findViewById(R.id.cancelButton);
+        ratingBar = (AppCompatRatingBar)findViewById(R.id.ratingBar);
 
         barcode = ScanManager.getInstance().getBarcode();
-        barcodeText.setText("상품 바코드 : "+ barcode);
         id = MemberManager.getInstance().getId();
+        level = MemberManager.getInstance().getLevel();
 
         //등록 버튼 클릭
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 productName = productNameEdit.getText().toString();
-                NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, id, barcode, productName, new NetworkManager.OnResultListener<String>() {
+                starPoint = (double)ratingBar.getRating();
+                reviewText = reviewEditText.getText().toString();
+                NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, id, barcode, productName, starPoint, reviewText, level, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {
                         //로그인이 안된 상태에서 상품 등록을 요청
+                        /*
                         if(MemberManager.getInstance().getIsLogin() == false) {
                             Toast.makeText(ProductRegisterActivity.this, "상품을 등록 하시려면 로그인을 하세요.", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(ProductRegisterActivity.this, LoginActivity.class);
                             startActivity(i);
                         }
+                        */
                         if(result.equals("{\"result\":\"\"}")){
                             Toast.makeText(ProductRegisterActivity.this, "이미 등록 요청 된 상품입니다.", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);

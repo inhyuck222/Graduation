@@ -52,6 +52,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/text_white"
             android:orientation="vertical">
 
             <ImageView
@@ -59,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/zebra_icon_logo" />
 
             <TextView
@@ -70,23 +71,25 @@
                 android:layout_marginRight="40dp"
                 android:text="상품을 등록해주세요!"
                 android:textColor="@color/primary"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/barcodeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatRatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="5"
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
+                    android:stepSize="0.5"
+                    android:theme="@style/RatingBar" />
 
                 <EditText
                     android:id="@+id/productNameEdit"
@@ -99,29 +102,46 @@
                     android:lines="1"
                     android:singleLine="true" />
 
-                <Button
-                    android:id="@+id/registerButton"
+                <EditText
+                    android:id="@+id/reviewEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="90dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/rounded_button"
-                    android:text="등록 요청"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="top"
+                    android:hint="리뷰를 등록해주세요"
+                    android:padding="5dp" />
 
-                <Button
-                    android:id="@+id/cancelButton"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
+                    android:orientation="horizontal"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/rounded_button"
-                    android:text="취소"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/registerButton"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/rounded_button"
+                        android:text="등록 요청"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20dp" />
+
+                    <Button
+                        android:id="@+id/cancelButton"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_button"
+                        android:text="취소"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
