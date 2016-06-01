@@ -331,6 +331,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if(action.equals(QuickstartPreferences.REGISTRATION_COMPLETE)){
                     // 액션이 COMPLETE일 경우
                     token = intent.getStringExtra("token");
+                    Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+                    startActivity(searchIntent);
 
                 }
             }

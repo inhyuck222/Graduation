@@ -12,6 +12,9 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+import java.net.URLDecoder;
+
+import example.zxing.BuildConfig;
 import example.zxing.R;
 import zebra.activity.MainActivity;
 
@@ -29,8 +32,23 @@ public class MyGcmListenerService  extends GcmListenerService {
      */
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String title = data.getString("title");
-        String message = data.getString("message");
+        String title = "";
+        String titleTemp = "";
+        String message = "";
+        String messageTemp = "";
+        if(BuildConfig.DEBUG){
+            try{
+                titleTemp = data.getString("title");
+                messageTemp = data.getString("message");
+                title = URLDecoder.decode(titleTemp, "euc-kr");
+                message = URLDecoder.decode(messageTemp, "euc-kr");
+            }catch (Exception e){
+                Log.i("test", "[onMessage] Exception : " + e.getMessage());
+            }
+        }
+
+        title.replace("+","\t");
+        message.replace("+","\t");
 
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Title: " + title);
@@ -53,7 +71,7 @@ public class MyGcmListenerService  extends GcmListenerService {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                .setSmallIcon(R.drawable.zebra_icon_logo)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)

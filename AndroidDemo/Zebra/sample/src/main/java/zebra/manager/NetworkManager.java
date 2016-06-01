@@ -61,7 +61,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    private static final String SERVER_URL = "http://113.198.84.84:8080/ZEBRA/";
+    private static final String SERVER_URL = "http://113.198.84.82:8080/ZEBRA/";
 
     private static final String LOGIN_URL = SERVER_URL + "/appLogin";
 
