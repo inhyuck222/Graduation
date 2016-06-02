@@ -1,8 +1,7 @@
 package zebra.manager;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
+
 
 
 import com.google.gson.Gson;
@@ -11,11 +10,8 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 
-import org.junit.experimental.categories.Category;
-
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.client.HttpClient;
-import zebra.activity.MyPageActivity;
 import zebra.json.Login;
 import zebra.json.MyReview;
 import zebra.json.Review;
@@ -186,12 +182,10 @@ public class NetworkManager {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode, responseString);
-                Toast.makeText(context, "실패 " + statusCode, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Toast.makeText(context, "성공 " + statusCode, Toast.LENGTH_LONG).show();
                 String jsonResponseString = responseString.replaceAll("[\n \r]", "");
                 Search result = gson.fromJson(jsonResponseString, Search.class);
                 listener.onSuccess(result);
@@ -213,7 +207,6 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Toast.makeText(context, "성공 " + statusCode, Toast.LENGTH_LONG).show();
                 String jsonResponseString = responseString.replaceAll("[\n \r]", "");
                 Search result = gson.fromJson(jsonResponseString, Search.class);
                 listener.onSuccess(result);
@@ -230,7 +223,6 @@ public class NetworkManager {
         client.post(context, MY_REVIEW, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(context, "실패 " + statusCode, Toast.LENGTH_LONG).show();
             }
 
             @Override
