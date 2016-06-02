@@ -61,7 +61,7 @@ public class NetworkManager {
         return client.getHttpClient();
     }
 
-    private static final String SERVER_URL = "http://113.198.84.82:8080/ZEBRA/";
+    private static final String SERVER_URL = "http://223.194.133.103:8080/ZEBRA/";
 
     private static final String LOGIN_URL = SERVER_URL + "/appLogin";
 
@@ -69,6 +69,7 @@ public class NetworkManager {
         RequestParams params = new RequestParams();
         params.put("id", id);
         params.put("password", password);
+        params.put("token", GCMManager.getInstance().getToken());
         client.post(context, LOGIN_URL, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {

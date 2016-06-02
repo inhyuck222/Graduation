@@ -27,7 +27,7 @@ import zebra.views.NaviHeaderView;
 /**
  * Created by multimedia on 2016-05-22.
  */
-public class ProductRegisterActivity extends AppCompatActivity{
+public class ProductRegisterActivity extends AppCompatActivity {
     EditText productNameEdit;
     Button registerButton, cancelButton;
     String barcode, productName, id;
@@ -43,9 +43,9 @@ public class ProductRegisterActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        productNameEdit = (EditText)findViewById(R.id.productNameEdit);
-        registerButton = (Button)findViewById(R.id.registerButton);
-        cancelButton = (Button)findViewById(R.id.cancelButton);
+        productNameEdit = (EditText) findViewById(R.id.productNameEdit);
+        registerButton = (Button) findViewById(R.id.registerButton);
+        cancelButton = (Button) findViewById(R.id.cancelButton);
 
         barcode = ScanManager.getInstance().getBarcode();
         id = MemberManager.getInstance().getId();
@@ -59,21 +59,14 @@ public class ProductRegisterActivity extends AppCompatActivity{
                 NetworkManager.getInstance().productRegister(ProductRegisterActivity.this, id, barcode, productName, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {
-                        /*if(result.equals("{\"result\":\"\"}")){
-                            Toast.makeText(ProductRegisterActivity.this, "이미 등록 요청 된 상품입니다.", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
-                            startActivity(i);
-                            finish();
-                        } else {*/
-                            Toast.makeText(ProductRegisterActivity.this, "소중한 상품 등록 감사합니다!!", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
-                            startActivity(i);
-                            finish();
-                        //}
+                        Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
                     }
+
                     @Override
                     public void onFail(int code) {
-                        Toast.makeText(ProductRegisterActivity.this, "실패 "+code, Toast.LENGTH_LONG).show();
+
                     }
                 });
             }
@@ -82,7 +75,6 @@ public class ProductRegisterActivity extends AppCompatActivity{
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProductRegisterActivity.this, "다음 기회에 ~", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(ProductRegisterActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -92,13 +84,13 @@ public class ProductRegisterActivity extends AppCompatActivity{
         setToolbar();
     }
 
-    void setToolbar(){
+    void setToolbar() {
         //Toolbar 설정
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
-        mDrawerList = (ListView)findViewById(R.id.naviList);
+        mDrawerList = (ListView) findViewById(R.id.naviList);
         naviAdapter = new NaviAdapter();
         mDrawerList.setAdapter(naviAdapter);
 
@@ -106,29 +98,41 @@ public class ProductRegisterActivity extends AppCompatActivity{
         mDrawerList.addHeaderView(header);
 
         //navbar 아이템들, 지워야됨
-        for (int i=0; i<4; i++) {
-            if(i == 0){NaviItem item = new NaviItem(R.drawable.ic_perm_identity_black_48dp, "프로필");naviAdapter.add(item);}
-            if(i == 1){NaviItem item = new NaviItem(R.drawable.ic_library_books_black_48dp, "나의 리뷰");naviAdapter.add(item);}
-            if(i == 2){NaviItem item = new NaviItem(R.drawable.ic_redeem_black_48dp, "선물함");naviAdapter.add(item);}
-            if(i == 3){NaviItem item = new NaviItem(R.drawable.logout, "로그아웃");naviAdapter.add(item);}
+        for (int i = 0; i < 4; i++) {
+            if (i == 0) {
+                NaviItem item = new NaviItem(R.drawable.ic_perm_identity_black_48dp, "프로필");
+                naviAdapter.add(item);
+            }
+            if (i == 1) {
+                NaviItem item = new NaviItem(R.drawable.ic_library_books_black_48dp, "나의 리뷰");
+                naviAdapter.add(item);
+            }
+            if (i == 2) {
+                NaviItem item = new NaviItem(R.drawable.ic_redeem_black_48dp, "선물함");
+                naviAdapter.add(item);
+            }
+            if (i == 3) {
+                NaviItem item = new NaviItem(R.drawable.logout, "로그아웃");
+                naviAdapter.add(item);
+            }
         }
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int editedPosition = position+1;
-                Toast.makeText(ProductRegisterActivity.this, "You selected item " + editedPosition, Toast.LENGTH_SHORT).show();
+                int editedPosition = position + 1;
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close){
-            public void onDrawerClosed(View v){
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+            public void onDrawerClosed(View v) {
                 super.onDrawerClosed(v);
                 invalidateOptionsMenu();
                 syncState();
             }
-            public void onDrawerOpened(View v){
+
+            public void onDrawerOpened(View v) {
                 super.onDrawerOpened(v);
                 invalidateOptionsMenu();
                 syncState();
@@ -143,17 +147,18 @@ public class ProductRegisterActivity extends AppCompatActivity{
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home: {
-                if (mDrawerLayout.isDrawerOpen(mDrawerList)){
+                if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
                     mDrawerLayout.closeDrawer(mDrawerList);
                 } else {
                     mDrawerLayout.openDrawer(mDrawerList);
                 }
                 return true;
             }
-            default: return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

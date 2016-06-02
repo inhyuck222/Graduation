@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import example.zxing.R;
@@ -27,7 +28,7 @@ import zebra.manager.NetworkManager;
 public class LoginFragment extends Fragment {
     Button loginButton;
     EditText idEditText, passwordEditText;
-    CheckBox autoLoginCheck;
+    TextView registerText1, registerText2;
     String id, password;
 
 
@@ -38,6 +39,12 @@ public class LoginFragment extends Fragment {
 
         idEditText = (EditText) view.findViewById(R.id.idEditText);
         passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
+        registerText1 = (TextView)view.findViewById(R.id.registerText1);
+        registerText2 = (TextView)view.findViewById(R.id.registerText2);
+        if(LoginActivity.fromRegister){
+            registerText1.setText("등록이 안된 상품입니다.");
+            registerText2.setText("상품 등록을 원하시면 로그인을 해주세요.");
+        }
 
         idEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -53,13 +60,10 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        autoLoginCheck = (CheckBox) view.findViewById(R.id.autoLoginCheck);
-
         loginButton = (Button) view.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //final View viewLogin = v;
                 id = idEditText.getText().toString();
                 password = passwordEditText.getText().toString();
 
@@ -74,31 +78,12 @@ public class LoginFragment extends Fragment {
                                 return;
                             }else {
                                 MemberManager.getInstance().memberSet(result);
-                                Toast.makeText(getActivity(), "로그인 성공", Toast.LENGTH_LONG).show();
                                 getActivity().finish();
                             }
-
-                            /*
-                            if (autoLoginCheck.isChecked()) {
-                                PropertyManager.getInstance().setAutoLogin(view.getContext(),true);
-                                PropertyManager.getInstance().setMemberInfoToPrefManager(result);
-                                PropertyManager.getInstance().setMemberInfoToMemManager(result);
-                            } else {
-                                PropertyManager.getInstance().setMemberInfoToMemManager(result);
-                            }
-
-                            PropertyManager.getInstance().setIsLogin(true);
-                            //MemberManager.getInstance().setIsLogin(true);
-
-                            Toast.makeText(getActivity(), "로그인 성공", Toast.LENGTH_LONG).show();
-
-                            getActivity().finish();
-                            */
                         }
 
                         @Override
                         public void onFail(int code, String responseString) {
-                            Toast.makeText(getActivity(), "실패", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

@@ -54,10 +54,8 @@ public class CategorySearchFragment extends Fragment {
 
                     }
                 });
-
             }
         });
-
         return view;
     }
 

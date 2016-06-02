@@ -138,7 +138,6 @@ public class ReviewActivityTest extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int editedPosition = position+1;
-                Toast.makeText(ReviewActivityTest.this, "You selected item " + editedPosition, Toast.LENGTH_SHORT).show();
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
@@ -190,9 +189,7 @@ public class ReviewActivityTest extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
                 //ScanManager에 barcode를 set
                 ScanManager.getInstance().setBarcode(result.getContents());
@@ -200,7 +197,6 @@ public class ReviewActivityTest extends AppCompatActivity {
                 network();
             }
         } else {
-            Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -231,7 +227,6 @@ public class ReviewActivityTest extends AppCompatActivity {
 
             @Override
             public void onFail(int code, String responseString) {
-                Toast.makeText(ReviewActivityTest.this, "실패 "+code, Toast.LENGTH_LONG).show();
             }
         });
     }

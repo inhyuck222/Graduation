@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    String token;
 
     LinearLayout loginButton, barcodeButton, categoryButton, searchButton;
 
@@ -70,17 +69,22 @@ public class MainActivity extends AppCompatActivity {
 
         registBroadcastReceiver();
 
+        if (ScanManager.getInstance().getIsGCM()) {
+            barcode = ScanManager.getInstance().getBarcode();
+            ScanManager.getInstance().setIsGCM(false);
+            network();
+        }
 
-        loginButton = (LinearLayout)findViewById(R.id.loginButton);
-        barcodeButton = (LinearLayout)findViewById(R.id.barcodeButton);
-        categoryButton = (LinearLayout)findViewById(R.id.categoryButton);
-        searchButton = (LinearLayout)findViewById(R.id.searchButton);
-        myText = (TextView)findViewById(R.id.myText);
+        loginButton = (LinearLayout) findViewById(R.id.loginButton);
+        barcodeButton = (LinearLayout) findViewById(R.id.barcodeButton);
+        categoryButton = (LinearLayout) findViewById(R.id.categoryButton);
+        searchButton = (LinearLayout) findViewById(R.id.searchButton);
+        myText = (TextView) findViewById(R.id.myText);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(MemberManager.getInstance().getIsLogin()){
+                if (MemberManager.getInstance().getIsLogin()) {
                     networkMyPage();
                     return;
                 }
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setToolbar(false);
-        if(MemberManager.getInstance().getIsLogin()){
+        if (MemberManager.getInstance().getIsLogin()) {
             myText.setText("My Page");
         }
     }
@@ -148,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 naviAdapter.add(item);
             }
             if (i == 3) {
-                if(MemberManager.getInstance().getIsLogin()) {
+                if (MemberManager.getInstance().getIsLogin()) {
                     NaviItem item = new NaviItem(R.drawable.logout, "로그아웃");
                     naviAdapter.add(item);
                 } else {
@@ -168,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
                         setToolbar(false);
                 }
                 int editedPosition = position + 1;
-                Toast.makeText(MainActivity.this, "You selected item " + editedPosition, Toast.LENGTH_SHORT).show();
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
@@ -194,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-    public void networkMyPage(){
+    public void networkMyPage() {
         NetworkManager.getInstance().myReview(this, MemberManager.getInstance().getId(), new NetworkManager.OnResultResponseListener<MyReview>() {
             @Override
             public void onSuccess(MyReview result) {
@@ -217,9 +220,8 @@ public class MainActivity extends AppCompatActivity {
                 //등록 된 상품이 없는 경우
                 if (result == null) {
                     if (MemberManager.getInstance().getIsLogin() == false) {
-                        Toast.makeText(MainActivity.this, "로그인을 먼저 하세요.", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                        i.putExtra("fromRegister", "fromRegister");
+                        i.putExtra("fromRegister", true);
                         startActivity(i);
                         return;
                     }
@@ -237,7 +239,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFail(int code, String responseString) {
-                Toast.makeText(MainActivity.this, "실패" + code, Toast.LENGTH_LONG).show();
                 Log.d("Main", "실패");
             }
         });
@@ -249,10 +250,8 @@ public class MainActivity extends AppCompatActivity {
         if (result != null) {
             if (result.getContents() == null) {
                 Log.d("MainActivity", "Cancelled scan");
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 Log.d("MainActivity", "Scanned");
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
                 //ScanManager에 barcode를 set
                 ScanManager.getInstance().setBarcode(result.getContents());
@@ -261,7 +260,6 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             Log.d("MainActivity", "Cancelled scan");
-            Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -316,24 +314,20 @@ public class MainActivity extends AppCompatActivity {
     /**
      * LocalBroadcast 리시버를 정의한다. 토큰을 획득하기 위한 READY, GENERATING, COMPLETE 액션에 따라 UI에 변화를 준다.
      */
-    public void registBroadcastReceiver(){
+    public void registBroadcastReceiver() {
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
 
-                if(action.equals(QuickstartPreferences.REGISTRATION_READY)){
+                if (action.equals(QuickstartPreferences.REGISTRATION_READY)) {
                     // 액션이 READY일 경우
 
-                } else if(action.equals(QuickstartPreferences.REGISTRATION_GENERATING)){
+                } else if (action.equals(QuickstartPreferences.REGISTRATION_GENERATING)) {
                     // 액션이 GENERATING일 경우
 
-                } else if(action.equals(QuickstartPreferences.REGISTRATION_COMPLETE)){
+                } else if (action.equals(QuickstartPreferences.REGISTRATION_COMPLETE)) {
                     // 액션이 COMPLETE일 경우
-                    token = intent.getStringExtra("token");
-                    Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
-                    startActivity(searchIntent);
-
                 }
             }
         };

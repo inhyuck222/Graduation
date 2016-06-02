@@ -94,7 +94,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int editedPosition = position+1;
-                Toast.makeText(SearchActivity.this, "You selected item " + editedPosition, Toast.LENGTH_SHORT).show();
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
@@ -136,7 +135,6 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFail(int code, String responseString) {
-                Toast.makeText(SearchActivity.this, "실패"+code, Toast.LENGTH_LONG).show();
             }
         });
     }

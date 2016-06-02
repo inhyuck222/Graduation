@@ -48,7 +48,6 @@ public class ReviewRegisterFragment  extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText( ((ReviewActivityTest)getContext()), "취소", Toast.LENGTH_LONG).show();
                 ((ReviewActivityTest) getActivity()).popFragment();
             }
         });
@@ -85,7 +84,6 @@ public class ReviewRegisterFragment  extends Fragment {
                         }
                         @Override
                         public void onFail(int code, String responseString) {
-                            Toast.makeText(viewGettedOnclick.getContext(), "야미실패"+code, Toast.LENGTH_LONG).show();
                         }
                     });
                 }
